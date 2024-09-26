@@ -5,9 +5,9 @@ import useGlobalKeyboardShortcuts from "hooks/useGlobalKeyboardShortcuts";
 import useIFrameFocuser from "hooks/useIFrameFocuser";
 import useUrlLoader from "hooks/useUrlLoader";
 import { Login } from "pages/Login";
-import Desktop from "components/system/Desktop";
+import { Dock } from "components/dock/Dock";
 import AppsLoader from "components/system/Apps/AppsLoader";
-import Taskbar from "components/system/Taskbar";
+import Desktop from "components/system/Desktop";
 
 const Index = (): React.ReactElement => {
   useIFrameFocuser();
@@ -50,7 +50,7 @@ const Index = (): React.ReactElement => {
   if (login) {
     return (
       <Desktop>
-        <Taskbar />
+        <Dock />
         <AppsLoader />
       </Desktop>
     );
