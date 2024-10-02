@@ -11,7 +11,6 @@ const Desktop: FC = ({ children }) => {
 
   return (
     <StyledDesktop ref={desktopRef}>
-      {/* <MenuBar /> */}
       <FileManager
         url={DESKTOP_PATH}
         view="icon"

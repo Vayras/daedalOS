@@ -1,4 +1,5 @@
 import { memo, useState } from "react";
+import { TopBar } from "components/topbar/TopBar";
 import { Boot } from "pages/Boot";
 import useGlobalErrorHandler from "hooks/useGlobalErrorHandler";
 import useGlobalKeyboardShortcuts from "hooks/useGlobalKeyboardShortcuts";
@@ -50,6 +51,7 @@ const Index = (): React.ReactElement => {
   if (login) {
     return (
       <Desktop>
+        <TopBar/>
         <Dock />
         <AppsLoader />
       </Desktop>

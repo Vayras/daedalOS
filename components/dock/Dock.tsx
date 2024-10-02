@@ -1,24 +1,36 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
+import {Finder} from "components/dock/Finder";
 import { scaleValue } from "utils/scale";
 
 const maxAdditionalSize = 5;
 
+const size = {
+  mobile: "520px",
+  tablet: "768px",
+  laptop: "1024px",
+  desktop: "2560px",
+}
+
 const Main = styled.nav`
   position: fixed;
-  bottom: 10px;
+  bottom: 5px;
   left: 40%;
-  margin: auto auto 12px auto;
   border-radius: 14px;
-  padding: 0 3px;
+  padding: 5px 5px;
   background-image: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 0),
     rgba(255, 255, 255, 0.15)
   );
   box-shadow: rgba(255, 255, 255, 0.17) 0px 0px 0px 1px inset;
-`;
 
+  @media (max-width: ${size.mobile}) {
+    position: fixed;
+    bottom: 5px;
+    left: 1%;
+  }
+`;
 const DockList = styled.ul`
   display: flex;
   list-style-type: none;
@@ -105,13 +117,14 @@ const Tooltip = styled.span`
 
 export const Dock = () => {
   const dockRef = useRef<HTMLDivElement>(null);
-
+  const [showFinder, setShowFinder] = useState(false);
   const handleAppHover = (ev: React.MouseEvent<HTMLLIElement>) => {
     if (!dockRef.current) return;
 
     const mousePosition = ev.clientX;
     const iconPositionLeft = ev.currentTarget.getBoundingClientRect().left;
     const iconWidth = ev.currentTarget.getBoundingClientRect().width;
+
 
     const cursorDistance = (mousePosition - iconPositionLeft) / iconWidth;
     const offsetPixels = scaleValue(
@@ -131,13 +144,20 @@ export const Dock = () => {
     );
   };
 
+
+
   return (
-    <Main ref={dockRef}>
+    <>
+      {showFinder &&
+        <Finder open={showFinder} setOpen={setShowFinder}/>
+      }
+
+    <Main ref={dockRef} >
       <DockList>
         <AppItem onMouseMove={handleAppHover}>
-          <AppLink href="/" target="_blank">
-            <AppImage src="https://www.frontend.fyi/playground-assets/macos-dock/icons/arc.png" />
-            <Tooltip>Arc Browser</Tooltip>
+          <AppLink onClick={() =>setShowFinder(!showFinder)}>
+            <AppImage src="https://upload.wikimedia.org/wikipedia/en/9/98/FinderBigSur.png" />
+            <Tooltip>Finder</Tooltip>
           </AppLink>
         </AppItem>
         <AppItem onMouseMove={handleAppHover}>
@@ -170,8 +190,8 @@ export const Dock = () => {
             <Tooltip>Slack</Tooltip>
           </AppLink>
         </AppItem>
-        {/* Repeat AppItem for each app */}
       </DockList>
     </Main>
+    </>
   );
 };
