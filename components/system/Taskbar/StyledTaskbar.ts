@@ -3,15 +3,20 @@ import { TASKBAR_HEIGHT } from "utils/constants";
 
 const StyledTaskbar = styled.nav`
   backdrop-filter: ${({ theme }) => `blur(${theme.sizes.taskbar.blur})`};
-  background-color: ${({ theme }) => theme.colors.taskbar.background};
-  bottom: 0;
+  border: 1px solid #6c6f7a;
+  background-color: #444652;
+  bottom: 10px;
   contain: size layout;
   height: ${TASKBAR_HEIGHT}px;
-  left: 0;
   position: absolute;
-  right: 0;
-  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 75px;
+  border-radius: 12px;
   z-index: 100000;
+  display: flex;
+  flex-direction: row;
 `;
 
 export default StyledTaskbar;

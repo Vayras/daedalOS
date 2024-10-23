@@ -18,6 +18,7 @@ const StyledTaskbarButton = styled(Button)<StyledTaskbarButtonProps>`
   place-content: center;
   place-items: center;
   position: absolute;
+  z-index: 999;
 
   && {
     width: ${({ theme }) => theme.sizes.taskbar.button.width}px;
