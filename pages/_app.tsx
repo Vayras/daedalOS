@@ -7,6 +7,8 @@ import { MenuProvider } from "contexts/menu";
 import { ProcessProvider } from "contexts/process";
 import { SessionProvider } from "contexts/session";
 import { ViewportProvider } from "contexts/viewport";
+import "styles/global.css";
+import "styles/component.css";
 
 const App = ({ Component, pageProps }: AppProps): React.ReactElement => (
   <ViewportProvider>

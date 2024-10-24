@@ -1,0 +1,94 @@
+.slider {
+  border: 1px solid rgba(128, 128, 128, 0.431);
+  padding-top: 5px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: black;
+  margin-bottom: 7px;
+  p {
+    padding-bottom: 5px;
+  }
+  .slider-inner {
+    border: 2px solid rgba(128, 128, 128, 0.786);
+    display: flex;
+    padding: 0 0;
+    border: 50px;
+    .icon {
+      background-color: #fff;
+      padding: 0 10px;
+      padding-right: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50px 0 0 50px;
+      color: black;
+    }
+    svg {
+      width: 15px;
+      height: 15px;
+    }
+    input {
+      width: 100%;
+    }
+  }
+}
+
+.range {
+  width: 100%;
+  height: 25px;
+  padding: 0;
+  margin: 0;
+  .rangeslider {
+    padding: 0;
+    margin: 0;
+    height: 25px;
+    background-color: rgba(0, 0, 0, 0.189);
+    border-radius: 50px;
+    box-shadow: none;
+    .rangeslider__fill {
+      background-color: #fff;
+      box-shadow: none;
+      border-radius: 0px;
+    }
+
+    .rangeslider__handle {
+      background-color: #fff;
+      width: 25px;
+      height: 25px;
+      color: #fff;
+      box-shadow: -5px 0px 10px 0px rgba(#111, 0.2);
+      border: none;
+      outline: none;
+      &::after {
+        display: none;
+      }
+    }
+  }
+}
+
+html.dark .rangeslider .rangeslider__fill {
+  background-color: #333;
+}
+
+html.dark .slider-inner .icon {
+  background-color: #333;
+  color: white;
+}
+
+.full-window {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999; /* To ensure it's on top */
+}
+
+.maximized {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: fixed;
+}

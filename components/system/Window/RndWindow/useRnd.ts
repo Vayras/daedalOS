@@ -80,7 +80,7 @@ const useRnd = (id: string): Props => {
         newSize.height += newPositon.y;
         newPositon.y = 0;
       }
-
+  
       setSize(newSize);
       setPosition(newPositon);
       setWindowStates((currentWindowStates) => ({

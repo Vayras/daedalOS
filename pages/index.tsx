@@ -14,10 +14,12 @@ const Index = (): React.ReactElement => {
   useGlobalErrorHandler();
 
   return (
-    <Desktop>
-      <Taskbar />
-      <AppsLoader />
-    </Desktop>
+    <div>
+      <Desktop>
+        <Taskbar />
+        <AppsLoader />
+      </Desktop>
+    </div>
   );
 };
 

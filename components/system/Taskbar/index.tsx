@@ -12,7 +12,6 @@ import { useSession } from "contexts/session";
 import { useProcesses } from "contexts/process";
 import directory from "contexts/process/directory";
 import { type ProcessArguments } from "contexts/process/types";
-import Dock from "../Dock/Dock";
 
 const AIButton = dynamic(() => import("components/system/Taskbar/AI/AIButton"));
 const AIChat = dynamic(() => import("components/system/Taskbar/AI/AIChat"));
@@ -101,7 +100,6 @@ const Taskbar: FC = () => {
         )}
         <TaskbarEntries clockWidth={clockWidth} hasAI={hasAI} />
       </StyledTaskbar>
-
 
       <AnimatePresence initial={false} presenceAffectsLayout={false}>
         {calendarVisible && (
