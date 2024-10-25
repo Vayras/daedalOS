@@ -7,19 +7,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { GoTo, Refresh } from "components/apps/FileExplorer/NavigationIcons";
 import StyledAddressBar from "components/apps/FileExplorer/StyledAddressBar";
 import useAddressBarContextMenu from "components/apps/FileExplorer/useAddressBarContextMenu";
 import { useFileSystem } from "contexts/fileSystem";
 import { useProcesses } from "contexts/process";
-import Button from "styles/common/Button";
-import Icon from "styles/common/Icon";
-import {
-  DISBALE_AUTO_INPUT_FEATURES,
-  ROOT_NAME,
-  TRANSITIONS_IN_MILLISECONDS,
-} from "utils/constants";
-import { getExtension, label } from "utils/functions";
+import { DISBALE_AUTO_INPUT_FEATURES, ROOT_NAME } from "utils/constants";
+import { getExtension } from "utils/functions";
 import { getProcessByFileExtension } from "components/system/Files/FileEntry/functions";
 import { useSession } from "contexts/session";
 
@@ -43,13 +36,9 @@ const AddressBar = forwardRef<HTMLInputElement, AddressBarProps>(
     const addressBarRef =
       ref as React.MutableRefObject<HTMLInputElement | null>;
     const actionButtonRef = useRef<HTMLButtonElement | null>(null);
-    const {
-      open,
-      url: changeUrl,
-      processes: {
-        [id]: { icon, url = "" },
-      },
-    } = useProcesses();
+    const { open, url: changeUrl, processes } = useProcesses();
+    const process = processes[id] || {}; // Ensure process exists
+    const { icon = "/path/to/default/icon.png", url = "" } = process; // Fallback for icon
     const displayName = useMemo(() => basename(url) || ROOT_NAME, [url]);
     const [addressBar, setAddressBar] = useState(displayName);
     const { exists, stat, updateFolder } = useFileSystem();
@@ -101,7 +90,7 @@ const AddressBar = forwardRef<HTMLInputElement, AddressBarProps>(
 
     return (
       <StyledAddressBar>
-        <Icon alt={displayName} imgSize={16} src={icon} />
+        {/* <Icon alt={displayName} imgSize={16} src={icon} /> */}
         <input
           ref={addressBarRef}
           className={inputing ? "inputing" : ""}
@@ -119,7 +108,7 @@ const AddressBar = forwardRef<HTMLInputElement, AddressBarProps>(
           {...ADDRESS_INPUT_PROPS}
           {...useAddressBarContextMenu(url)}
         />
-        <Button
+        {/* <Button
           ref={actionButtonRef}
           className="action"
           onClick={() => {
@@ -139,7 +128,7 @@ const AddressBar = forwardRef<HTMLInputElement, AddressBarProps>(
           )}
         >
           {inputing ? <GoTo /> : <Refresh />}
-        </Button>
+        </Button> */}
       </StyledAddressBar>
     );
   }

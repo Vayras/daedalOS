@@ -26,12 +26,9 @@ const MAX_ENTRIES = 10;
 const SearchBar: FC<SearchBarProps> = ({ id }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const hasUsedSearch = useRef(false);
-  const {
-    open,
-    processes: {
-      [id]: { url = "" },
-    },
-  } = useProcesses();
+  const { open, processes } = useProcesses();
+  const process = processes[id] || {}; // Ensure process exists
+  const url = process.url || ""; // Provide a fallback for url
   const searchBarRef = useRef<HTMLInputElement | null>(null);
   const results = useSearch(searchTerm);
   const { contextMenu } = useMenu();
@@ -91,7 +88,6 @@ const SearchBar: FC<SearchBarProps> = ({ id }) => {
       searchBarRef.current.value = "";
       setSearchTerm("");
     }
-    // eslint-disable-next-line react-hooks-addons/no-unused-deps
   }, [url]);
 
   return (

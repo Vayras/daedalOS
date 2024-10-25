@@ -11,10 +11,8 @@ import {
 } from "components/system/Window/Titlebar/WindowActionIcons";
 import useTitlebarContextMenu from "components/system/Window/Titlebar/useTitlebarContextMenu";
 import useWindowActions from "components/system/Window/Titlebar/useWindowActions";
-import { useMenu } from "contexts/menu";
 import { useProcesses } from "contexts/process";
 import { useSession } from "contexts/session";
-import useDoubleClick from "hooks/useDoubleClick";
 import { LONG_PRESS_DELAY_MS, PREVENT_SCROLL } from "utils/constants";
 import { haltEvent, label } from "utils/functions";
 
@@ -25,24 +23,17 @@ type TitlebarProps = {
 const Titlebar: FC<TitlebarProps> = ({ id }) => {
   const {
     processes: { [id]: process },
-  } = useProcesses();
+  } = useProcesses() || {};
   const {
     allowResizing = true,
-    closing,
     componentWindow,
     hideMaximizeButton,
     hideMinimizeButton,
-    hideTitlebarIcon,
-    icon,
-    title,
     maximized,
   } = process || {};
   const { foregroundId } = useSession();
   const isForeground = id === foregroundId;
   const { onClose, onMaximize, onMinimize } = useWindowActions(id);
-  const onClickClose = useDoubleClick(onClose);
-  const onClickMaximize = useDoubleClick(onMaximize);
-  const { menu, setMenu } = useMenu();
   const titlebarContextMenu = useTitlebarContextMenu(id);
   const touchStartTimeRef = useRef<number>(0);
   const touchStartPositionRef = useRef<DOMRect>();
@@ -100,7 +91,7 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
       onDrop={haltEvent}
       {...titlebarContextMenu}
     >
-      <div className="flex items-center space-x-2 mr-2">
+      <div className="flex items-center space-x-2 ml-3">
         {!hideMinimizeButton && (
           <button
             aria-label="Minimize"
@@ -114,7 +105,7 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
             justify-center
             group
           "
-            onClick={onMinimize}
+            onClick={() => onMinimize()}
             onTouchEnd={onTouchEnd}
             onTouchStart={onTouchStart}
             type="button"

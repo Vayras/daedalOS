@@ -8,12 +8,7 @@ import {
   useState,
 } from "react";
 import AddressBar from "components/apps/FileExplorer/AddressBar";
-import {
-  Back,
-  Down,
-  Forward,
-  Up,
-} from "components/apps/FileExplorer/NavigationIcons";
+import { Back, Forward } from "components/apps/FileExplorer/NavigationIcons";
 import SearchBar from "components/apps/FileExplorer/SearchBar";
 import StyledNavigation from "components/apps/FileExplorer/StyledNavigation";
 import useTitlebarContextMenu from "components/system/Window/Titlebar/useTitlebarContextMenu";
@@ -23,10 +18,6 @@ import useHistory from "hooks/useHistory";
 import Button from "styles/common/Button";
 import { ROOT_NAME } from "utils/constants";
 import { haltEvent, label } from "utils/functions";
-import {
-  type MenuState,
-  type CaptureTriggerEvent,
-} from "contexts/menu/useMenuContextState";
 import useResizeObserver from "hooks/useResizeObserver";
 
 type NavigationProps = {
@@ -38,12 +29,9 @@ const CONTEXT_MENU_OFFSET = 3;
 
 const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
   ({ hideSearch, id }, inputRef) => {
-    const {
-      url: changeUrl,
-      processes: {
-        [id]: { url = "" },
-      },
-    } = useProcesses();
+    const { url: changeUrl, processes } = useProcesses();
+    const process = processes[id] || {}; // Ensure `process` exists
+    const url = process.url || ""; // Provide a default value for `url`
     const upTo = url === "/" ? "" : basename(dirname(url));
     const { contextMenu, menu, setMenu } = useMenu();
     const { canGoBack, canGoForward, history, moveHistory, position } =
@@ -115,7 +103,7 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
         >
           <Forward />
         </Button>
-        <Button
+        {/* <Button
           disabled={history.length === 1}
           onClick={(event) => {
             event.preventDefault();
@@ -141,8 +129,8 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
           {...label("Recent locations")}
         >
           <Down />
-        </Button>
-        <Button
+        </Button> */}
+        {/* <Button
           disabled={url === "/"}
           onClick={() => changeUrl(id, dirname(url))}
           {...label(
@@ -152,7 +140,7 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
           )}
         >
           <Up />
-        </Button>
+        </Button> */}
         <AddressBar ref={inputRef} id={id} />
         {!hideSearch && !removeSearch && <SearchBar id={id} />}
       </StyledNavigation>

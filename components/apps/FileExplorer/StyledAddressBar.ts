@@ -4,7 +4,6 @@ const StyledAddressBar = styled.div`
   background-position: 2px 5px;
   background-repeat: no-repeat;
   background-size: 16px;
-  border: 1px solid rgb(83, 83, 83);
   display: flex;
   height: ${({ theme }) => theme.sizes.fileExplorer.navInputHeight}px;
   margin: 6px 12px 5px 5px;
@@ -14,8 +13,7 @@ const StyledAddressBar = styled.div`
   width: 100%;
 
   input {
-    background-color: rgb(25, 25, 25);
-    border-right: 1px solid rgb(21, 21, 21);
+    background-color: transparent;
     color: #fff;
     font-family: ${({ theme }) => theme.formats.systemFont};
     font-size: 12px;

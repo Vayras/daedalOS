@@ -19,6 +19,7 @@ const StyledTitlebar = styled.header<StyledTitlebarProps>`
       : theme.colors.titleBar.backgroundInactive};
   border-bottom: ${styledBorder};
   display: flex;
+  gap: 50px;
   width: inherit;
   height: ${({ theme }) => theme.sizes.titleBar.height}px;
   position: relative;

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const StyledNavigation = styled.nav`
-  background-color: rgb(25, 25, 25);
   display: flex;
   height: ${({ theme }) => theme.sizes.fileExplorer.navBarHeight};
 
