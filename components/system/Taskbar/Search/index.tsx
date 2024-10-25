@@ -1,6 +1,13 @@
-import { basename, extname } from "path";
+import { extname } from "path";
 import { useTheme } from "styled-components";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type FC,
+} from "react";
 import { m as motion } from "framer-motion";
 import { Search as SearchIcon } from "components/apps/FileExplorer/NavigationIcons";
 import {
@@ -15,13 +22,9 @@ import {
   Videos,
 } from "components/system/StartMenu/Sidebar/SidebarIcons";
 import Details from "components/system/Taskbar/Search/Details";
-import { Games } from "components/system/Taskbar/Search/Icons";
 import ResultSection from "components/system/Taskbar/Search/ResultSection";
-import StyledFiles from "components/system/Taskbar/Search/StyledFiles";
 import StyledResults from "components/system/Taskbar/Search/StyledResults";
 import StyledSearch from "components/system/Taskbar/Search/StyledSearch";
-import StyledSections from "components/system/Taskbar/Search/StyledSections";
-import StyledSuggestions from "components/system/Taskbar/Search/StyledSuggestions";
 import StyledTabs from "components/system/Taskbar/Search/StyledTabs";
 import useSearchInputTransition from "components/system/Taskbar/Search/useSearchInputTransition";
 import {
@@ -32,22 +35,18 @@ import useTaskbarItemTransition from "components/system/Taskbar/useTaskbarItemTr
 import { CloseIcon } from "components/system/Window/Titlebar/WindowActionIcons";
 import { useFileSystem } from "contexts/fileSystem";
 import { useProcesses } from "contexts/process";
-import directory from "contexts/process/directory";
 import { type ProcessArguments } from "contexts/process/types";
 import { useSession } from "contexts/session";
 import Button from "styles/common/Button";
-import Icon from "styles/common/Icon";
 import {
   FOCUSABLE_ELEMENT,
   KEYPRESS_DEBOUNCE_MS,
-  MILLISECONDS_IN_SECOND,
   PICTURES_FOLDER,
   PREVENT_SCROLL,
   SHORTCUT_EXTENSION,
-  TRANSITIONS_IN_SECONDS,
   VIDEOS_FOLDER,
 } from "utils/constants";
-import { haltEvent, label, preloadLibs } from "utils/functions";
+import { label, preloadLibs } from "utils/functions";
 import {
   FILE_INDEX,
   SEARCH_INPUT_PROPS,
@@ -260,142 +259,76 @@ const Search: FC<SearchProps> = ({ toggleSearch }) => {
       {...FOCUSABLE_ELEMENT}
     >
       <div>
-        <div className="content" onContextMenu={haltEvent}>
-          <StyledTabs>
-            {TABS.filter(
-              (tab) =>
-                !(menuWidth < 325 && tab === "Videos") &&
-                !(menuWidth < 260 && tab === "Photos")
-            ).map((tab) => (
-              // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
-              <li
-                key={tab}
-                className={tab === activeTab ? "active" : undefined}
-                onClick={() => changeTab(tab)}
-                {...label(
-                  tab === "All"
-                    ? "Find the most relevant results"
-                    : `Find results in ${tab}`
-                )}
+        {/* Search Bar at the Top */}
+        <motion.div className="search" {...inputTransition}>
+          <SearchIcon />
+          <input
+            ref={focusOnRenderCallback}
+            onChange={() => {
+              const tabAppend = activeTab === "All" ? "" : `${activeTab}: `;
+              const value = inputRef.current?.value.startsWith(tabAppend)
+                ? inputRef.current?.value.replace(tabAppend, "")
+                : inputRef.current?.value;
+
+              window.clearTimeout(searchTimeoutRef.current);
+              searchTimeoutRef.current = window.setTimeout(
+                () => setSearchTerm(value ?? ""),
+                searchTimeoutRef.current > 0 ? KEYPRESS_DEBOUNCE_MS : 0
+              );
+            }}
+            onClick={preloadedSearch.current ? undefined : preloadSearch}
+            onKeyDown={({ key }) => {
+              preloadSearch();
+
+              if (key === "Enter" && firstResult?.ref) {
+                const bestMatchElement = menuRef.current?.querySelector(
+                  ".list li:first-child figure"
+                );
+
+                (bestMatchElement as HTMLElement)?.click();
+              }
+            }}
+            placeholder="Type here to search"
+            style={{
+              caretColor: showCaret ? undefined : "transparent",
+            }}
+            {...SEARCH_INPUT_PROPS}
+          />
+        </motion.div>
+
+        {/* Only show results if searchTerm is not empty */}
+        {searchTerm && (
+          <>
+            <StyledTabs>
+              {TABS.filter(
+                (tab) =>
+                  !(menuWidth < 325 && tab === "Videos") &&
+                  !(menuWidth < 260 && tab === "Photos")
+              ).map((tab) => (
+                // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+                <li
+                  key={tab}
+                  className={tab === activeTab ? "active" : undefined}
+                  onClick={() => changeTab(tab)}
+                  {...label(
+                    tab === "All"
+                      ? "Find the most relevant results"
+                      : `Find results in ${tab}`
+                  )}
+                >
+                  {tab}
+                </li>
+              ))}
+            </StyledTabs>
+            <nav>
+              <Button
+                className="close-button"
+                onClick={() => toggleSearch(false)}
+                {...label("Close Search")}
               >
-                {tab}
-              </li>
-            ))}
-          </StyledTabs>
-          <nav>
-            <Button
-              className="close-button"
-              onClick={() => toggleSearch(false)}
-              {...label("Close Search")}
-            >
-              <CloseIcon />
-            </Button>
-          </nav>
-          {!searchTerm && activeTab === "All" && (
-            <StyledSections
-              $singleLine={singleLineView}
-              className={singleLineView ? "single-line" : undefined}
-            >
-              <section>
-                <figure>
-                  <figcaption>Suggested</figcaption>
-                  <StyledSuggestions>
-                    {SUGGESTED.map((app) => (
-                      // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
-                      <li
-                        key={app}
-                        onClick={() => openApp(app)}
-                        title={directory[app].title}
-                      >
-                        <figure>
-                          <Icon
-                            displaySize={32}
-                            imgSize={32}
-                            src={directory[app].icon}
-                          />
-                          <figcaption>{directory[app].title}</figcaption>
-                        </figure>
-                      </li>
-                    ))}
-                  </StyledSuggestions>
-                </figure>
-              </section>
-              <section>
-                {recentFiles.length > 0 && (
-                  <StyledFiles>
-                    <figcaption>Recent</figcaption>
-                    <ol>
-                      {recentFiles.map(([file, pid, title], index) => (
-                        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
-                        <li
-                          key={`${file}${pid}`}
-                          onClick={() => {
-                            openApp(pid, { url: file });
-                            if (index !== 0) {
-                              setTimeout(
-                                () => updateRecentFiles(file, pid, title),
-                                TRANSITIONS_IN_SECONDS.TASKBAR_ITEM *
-                                  MILLISECONDS_IN_SECOND
-                              );
-                            }
-                          }}
-                        >
-                          <Icon
-                            displaySize={16}
-                            imgSize={16}
-                            src={directory[pid]?.icon}
-                          />
-                          <h2>{title || basename(file, extname(file))}</h2>
-                        </li>
-                      ))}
-                    </ol>
-                  </StyledFiles>
-                )}
-                <figure className="card">
-                  <figcaption>
-                    <Games />
-                    Games for you
-                  </figcaption>
-                  <ol>
-                    {GAMES.filter(
-                      (game) =>
-                        !(menuWidth < 360 && game === "Quake3") &&
-                        !(menuWidth < 260 && game === "SpaceCadet")
-                    ).map(
-                      (game) =>
-                        directory[game] && (
-                          // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
-                          <li
-                            key={game}
-                            onClick={() => openApp(game)}
-                            title={directory[game].title}
-                          >
-                            <Icon
-                              displaySize={56}
-                              imgSize={96}
-                              src={directory[game].icon}
-                            />
-                            <h4>{directory[game].title}</h4>
-                          </li>
-                        )
-                    )}
-                  </ol>
-                </figure>
-              </section>
-            </StyledSections>
-          )}
-          {!searchTerm && activeTab !== "All" && (
-            <div className="tab">
-              {METADATA[activeTab].icon}
-              <h1>Search {METADATA[activeTab].title.toLowerCase()}</h1>
-              <h3>
-                Start typing to search{" "}
-                {METADATA[activeTab].subtitle ||
-                  METADATA[activeTab].title.toLowerCase()}
-              </h3>
-            </div>
-          )}
-          {searchTerm && (
+                <CloseIcon />
+              </Button>
+            </nav>
             <StyledResults>
               {(!singleLineView || !activeItem) && (
                 <div ref={listRef} className="list">
@@ -439,43 +372,8 @@ const Search: FC<SearchProps> = ({ toggleSearch }) => {
                 />
               )}
             </StyledResults>
-          )}
-        </div>
-        <motion.div className="search" {...inputTransition}>
-          <SearchIcon />
-          <input
-            ref={focusOnRenderCallback}
-            onChange={() => {
-              const tabAppend = activeTab === "All" ? "" : `${activeTab}: `;
-              const value = inputRef.current?.value.startsWith(tabAppend)
-                ? inputRef.current?.value.replace(tabAppend, "")
-                : inputRef.current?.value;
-
-              window.clearTimeout(searchTimeoutRef.current);
-              searchTimeoutRef.current = window.setTimeout(
-                () => setSearchTerm(value ?? ""),
-                searchTimeoutRef.current > 0 ? KEYPRESS_DEBOUNCE_MS : 0
-              );
-            }}
-            onClick={preloadedSearch.current ? undefined : preloadSearch}
-            onKeyDown={({ key }) => {
-              preloadSearch();
-
-              if (key === "Enter" && firstResult?.ref) {
-                const bestMatchElement = menuRef.current?.querySelector(
-                  ".list li:first-child figure"
-                );
-
-                (bestMatchElement as HTMLElement)?.click();
-              }
-            }}
-            placeholder="Type here to search"
-            style={{
-              caretColor: showCaret ? undefined : "transparent",
-            }}
-            {...SEARCH_INPUT_PROPS}
-          />
-        </motion.div>
+          </>
+        )}
       </div>
     </StyledSearch>
   );

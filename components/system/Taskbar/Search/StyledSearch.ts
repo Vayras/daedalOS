@@ -21,8 +21,8 @@ const StyledSearch = styled(motion.nav)<StyledSearchProps>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400px; /* Set desired width */
-  height: auto; /* Set desired height */
+  width: 800px;
+  height: 20px;
 
   backdrop-filter: ${({ theme }) => `blur(${theme.sizes.taskbar.panelBlur})`};
 
