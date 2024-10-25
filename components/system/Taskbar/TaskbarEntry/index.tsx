@@ -8,7 +8,6 @@ import useNextFocusable from "components/system/Window/useNextFocusable";
 import { useProcesses } from "contexts/process";
 import { useSession } from "contexts/session";
 import Button from "styles/common/Button";
-import Icon from "styles/common/Icon";
 import { DIV_BUTTON_PROPS } from "utils/constants";
 import { isSafari, label } from "utils/functions";
 
@@ -66,12 +65,7 @@ const TaskbarEntry: FC<TaskbarEntryProps> = ({ icon, id, title }) => {
         onClick={onClick}
         {...focusable}
         {...label(title)}
-      >
-        <figure>
-          <Icon alt={title} imgSize={16} src={icon} />
-          <figcaption>{title}</figcaption>
-        </figure>
-      </Button>
+      />
     </StyledTaskbarEntry>
   );
 };

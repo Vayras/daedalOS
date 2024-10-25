@@ -1,92 +1,65 @@
-import { memo, useCallback, useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-import SearchButton from "components/system/Taskbar/Search/SearchButton";
-import FileExplorerButton from "components/system/Taskbar/Search/FileExplorerButton";
-import StartButton from "components/system/Taskbar/StartButton";
+import { memo, useCallback } from "react";
+import styled from "styled-components";
 import StyledTaskbar from "components/system/Taskbar/StyledTaskbar";
-import TaskbarEntries from "components/system/Taskbar/TaskbarEntries";
 import useTaskbarContextMenu from "components/system/Taskbar/useTaskbarContextMenu";
-import { CLOCK_CANVAS_BASE_WIDTH, FOCUSABLE_ELEMENT } from "utils/constants";
-import { useSession } from "contexts/session";
+import { FOCUSABLE_ELEMENT } from "utils/constants";
 import { useProcesses } from "contexts/process";
 import directory from "contexts/process/directory";
 import { type ProcessArguments } from "contexts/process/types";
 
-const AIChat = dynamic(() => import("components/system/Taskbar/AI/AIChat"));
-const Calendar = dynamic(() => import("components/system/Taskbar/Calendar"));
-const Search = dynamic(() => import("components/system/Taskbar/Search"));
-const StartMenu = dynamic(() => import("components/system/StartMenu"));
 const SUGGESTED = ["FileExplorer", "Terminal", "Messenger", "Browser", "Paint"];
 
+const DockButton = styled.button`
+  width: 50px;
+  height: 50px;
+  margin: 0 10px;
+  position: relative; /* Position relative for dot positioning */
+  transition: transform 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.2);
+  }
+  &:active {
+    transform: scale(1.1);
+  }
+  z-index: 999;
+
+  /* Dot Indicator */
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 5px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #0f0; /* Dot color */
+    opacity: ${(props) => (props.isOpen ? 1 : 0)}; /* Only show if open */
+    transition: opacity 0.3s;
+  }
+`;
+
 const Taskbar: FC = () => {
-  const [startMenuVisible, setStartMenuVisible] = useState(false);
-  const [fileExplorerVisible, setFileExplorerVisible] = useState(false); // Track File Explorer state
-  const [searchVisible, setSearchVisible] = useState(false);
-  const [calendarVisible, setCalendarVisible] = useState(false);
-  const [aiVisible, setAIVisible] = useState(false);
-  const [clockWidth, setClockWidth] = useState(CLOCK_CANVAS_BASE_WIDTH);
-  const { open, processes } = useProcesses(); // Get processes from context
-  const { aiEnabled } = useSession();
+  const { open } = useProcesses();
 
   const openApp = useCallback(
     (pid: string, args?: ProcessArguments) => {
       open(pid, args);
-      if (pid === "FileExplorer") {
-        setFileExplorerVisible(true); // Show File Explorer taskbar entry
-      }
     },
     [open]
   );
 
-  // Effect to track when File Explorer is closed and reset visibility
-  useEffect(() => {
-    if (!processes.FileExplorer) {
-      setFileExplorerVisible(false); // Reset visibility when File Explorer is closed
-    }
-  }, [processes]);
-
-  const toggleStartMenu = useCallback(
-    (showMenu?: boolean): void =>
-      setStartMenuVisible((currentMenuState) => showMenu ?? !currentMenuState),
-    []
-  );
-  const toggleSearch = useCallback(
-    (showSearch?: boolean): void =>
-      setSearchVisible(
-        (currentSearchState) => showSearch ?? !currentSearchState
-      ),
-    []
-  );
-  const toggleCalendar = useCallback(
-    (showCalendar?: boolean): void =>
-      setCalendarVisible(
-        (currentCalendarState) => showCalendar ?? !currentCalendarState
-      ),
-    []
-  );
-  const toggleAI = useCallback(
-    (showAI?: boolean): void =>
-      setAIVisible((currentAIState) => showAI ?? !currentAIState),
-    []
-  );
-
-  const hasAI = aiEnabled;
-
   return (
     <StyledTaskbar {...useTaskbarContextMenu()} {...FOCUSABLE_ELEMENT}>
-      <StartButton
-        startMenuVisible={startMenuVisible}
-        toggleStartMenu={toggleStartMenu}
-      />
-      <SearchButton searchVisible={searchVisible} toggleSearch={toggleSearch} />
-      {!fileExplorerVisible && ( // Hide File Explorer button once opened
-        <FileExplorerButton
-          fileExplorerVisible={fileExplorerVisible}
-          onClick={() => openApp(SUGGESTED[0])}
-          title={directory[SUGGESTED[0]].title}
-        />
-      )}
-      <TaskbarEntries clockWidth={clockWidth} hasAI={hasAI} />
+      {SUGGESTED.map((app) => (
+        <DockButton
+          key={app}
+          onClick={() => openApp(app)}
+          title={directory[app]?.title || app}
+        >
+          <img alt={`${app} icon`} src={`/System/icons/144x144/${app}.avif`} />
+        </DockButton>
+      ))}
     </StyledTaskbar>
   );
 };
