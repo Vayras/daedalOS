@@ -17,13 +17,19 @@ const StyledSearch = styled(motion.nav)<StyledSearchProps>`
       true
     )}
 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px; /* Set desired width */
+  height: auto; /* Set desired height */
+
   backdrop-filter: ${({ theme }) => `blur(${theme.sizes.taskbar.panelBlur})`};
 
   @keyframes fade-in {
     0% {
       opacity: 0%;
     }
-
     100% {
       opacity: 100%;
     }

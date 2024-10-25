@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import { format } from "date-fns";
+import dynamic from "next/dynamic";
 import ControlCenter from "components/topbar/ControlCenterMenu";
 import SpotlightSearch from "components/topbar/spotlight";
 import WifiMenu from "components/topbar/WifiMenu";
@@ -69,19 +70,40 @@ export const TopBar = () => {
     }));
   };
 
+  const [searchVisible, setSearchVisible] = useState(false);
+  const toggleSearch = useCallback(
+    (showSearch?: boolean): void =>
+      setSearchVisible(
+        (currentSearchState) => showSearch ?? !currentSearchState
+      ),
+    []
+  );
+
+  const Search = dynamic(() => import("components/system/Taskbar/Search"));
   return (
     <div className="w-full h-8 px-2 fixed top-0 flex justify-between text-sm text-white bg-gray-700/10 backdrop-blur-2xl shadow transition dark:bg-gray-800/50 z-10">
       <div
         ref={appleBtnRef}
-        className="flex flex-row items-center md:gap-4 sm:gap-1 h-8 my-auto px-1 cursor-default text-center justify-center"
-        onClick={toggleAppleMenu}
+        className="flex flex-row items-center md:gap-4 sm:gap-1 h-8 my-auto px-1 cursor-pointer text-center justify-center rounded focus:outline-none"
+        role="button"
+        tabIndex={0}
       >
-        <span className="text-xl hover:bg-gray-100/30 px-1 h-6 cursor-default rounded flex items-center">
+        <button
+          aria-label="Apple Menu" // Optional: Improves accessibility by providing a label
+          className="text-xl hover:bg-gray-100/30 px-1 h-6 rounded flex items-center"
+          onClick={toggleAppleMenu}
+          type="button"
+        >
           <Icon icon="ic:outline-apple" />
-        </span>
-        <span className="font-semibold hover:bg-gray-100/30 px-1 h-6 cursor-default rounded flex items-center">
+        </button>
+        <button
+          aria-label="Finder"
+          className="font-semibold hover:bg-gray-100/30 px-1 h-6 rounded flex items-center"
+          onClick={() => toggleSearch()}
+          type="button"
+        >
           Finder
-        </span>
+        </button>
       </div>
 
       {state.showAppleMenu && (
@@ -148,6 +170,9 @@ export const TopBar = () => {
           <span>{format(state.date, "eee MMM d")}</span>
           <span>{format(state.date, "h:mm aa")}</span>
         </span>
+      </div>
+      <div className="absolute top-[500px] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        {searchVisible && <Search key="search" toggleSearch={toggleSearch} />}
       </div>
     </div>
   );

@@ -22,8 +22,8 @@ export const RESIZING_ENABLED = {
   topRight: true,
 };
 
-export const MIN_WINDOW_HEIGHT = 30;
-export const MIN_WINDOW_WIDTH = 166;
+export const MIN_WINDOW_HEIGHT = 500;
+export const MIN_WINDOW_WIDTH = 820;
 
 const rndDefaults = {
   cancel: ".cancel",

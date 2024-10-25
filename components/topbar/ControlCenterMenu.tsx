@@ -3,6 +3,7 @@ import { Icon } from "@iconify/react";
 import MusicPlayer from "components/topbar/MusicPlayer";
 import { FullWidthSlider } from "components/topbar/Slider";
 import { useClickOutside } from "hooks/useClickOutside";
+import { useViewport } from "contexts/viewport";
 
 interface ControlCenterProps {
   btnRef: React.RefObject<HTMLDivElement>;
@@ -21,9 +22,9 @@ const ControlCenter = ({
   const [brightness, setBrightness] = useState(70);
   const [wifi, setWifi] = useState(true);
   const [volume, setVolume] = useState(70);
-  const [fullScreen, setFullScreen] = useState(false);
   const [bluetooth, setBluetooth] = useState(true);
   const [airdrop, setAirdrop] = useState(true);
+  const { fullscreenElement, toggleFullscreen } = useViewport();
 
   const toggleDark = (): void => {
     setDark(!dark);
@@ -37,15 +38,6 @@ const ControlCenter = ({
 
   const handleVolumeChange = (value: number): void => {
     setVolume(value);
-  };
-
-  const toggleFullScreen = (): void => {
-    setFullScreen(!fullScreen);
-    if (fullScreen) {
-      document.exitFullscreen();
-    } else {
-      document.documentElement.requestFullscreen();
-    }
   };
 
   return (
@@ -176,15 +168,19 @@ const ControlCenter = ({
             {/* Fullscreen Toggle */}
             <button
               aria-label={
-                fullScreen ? "Exit Fullscreen Mode" : "Enter Fullscreen Mode"
+                fullscreenElement === document.documentElement
+                  ? "Exit full screen"
+                  : "Enter full screen"
               }
               className="max-w-[72px] max-h-[72px] flex flex-col items-center justify-center text-center bg-gray-200 dark:bg-[#34414f] dark:text-white rounded-xl shadow-lg backdrop-blur-2xl py-2 px-6"
-              onClick={toggleFullScreen}
+              onClick={() => toggleFullscreen()}
               type="button"
             >
               <Icon icon="material-symbols-light:fullscreen" />
               <span className="text-xs">
-                {fullScreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+                {fullscreenElement === document.documentElement
+                  ? "Exit full screen"
+                  : "Enter full screen"}
               </span>
             </button>
           </div>

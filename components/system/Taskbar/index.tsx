@@ -13,7 +13,6 @@ import { useProcesses } from "contexts/process";
 import directory from "contexts/process/directory";
 import { type ProcessArguments } from "contexts/process/types";
 
-const AIButton = dynamic(() => import("components/system/Taskbar/AI/AIButton"));
 const AIChat = dynamic(() => import("components/system/Taskbar/AI/AIChat"));
 const Calendar = dynamic(() => import("components/system/Taskbar/Calendar"));
 const Search = dynamic(() => import("components/system/Taskbar/Search"));

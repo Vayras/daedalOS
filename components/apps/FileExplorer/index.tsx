@@ -69,10 +69,7 @@ const FileExplorer: FC<ComponentProcessProps> = ({ id }) => {
               : COMPRESSED_FOLDER_ICON
           );
         } else if (fs) {
-          setProcessIcon(
-            id,
-            `/System/Icons/${directoryName ? "folder" : "pc"}.webp`
-          );
+          setProcessIcon(id, `/System/Icons/144x144/pc2.png`);
           getIconFromIni(fs, url).then((iconFile) => {
             if (iconFile) setProcessIcon(id, iconFile);
           });
@@ -97,7 +94,7 @@ const FileExplorer: FC<ComponentProcessProps> = ({ id }) => {
   useEffect(() => {
     if (componentWindow && !closing && !url) {
       setProcessUrl(id, "/");
-      setProcessIcon(id, "/System/Icons/pc.webp");
+      setProcessIcon(id, "/System/Icons/pc2.png");
     }
   }, [closing, id, componentWindow, setProcessIcon, setProcessUrl, url]);
 

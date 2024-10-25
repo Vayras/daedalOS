@@ -112,35 +112,63 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
           <figcaption>{title}</figcaption>
         </figure>
       </Button>
-      <nav className="cancel">
+
+      <div className="flex items-center space-x-2 mr-2">
         {!hideMinimizeButton && (
-          <Button
-            className="minimize"
-            onClick={() => onMinimize()}
+          <button
+            aria-label="Minimize"
+            className="
+          w-3 h-3
+          bg-yellow-400
+          rounded-full
+          hover:bg-yellow-500
+          focus:outline-none
+          flex
+          items-center
+          justify-center
+          group
+        "
+            onClick={onMinimize}
+            type="button"
             {...label("Minimize")}
           >
-            <MinimizeIcon />
-          </Button>
+            <div className="w-2 h-auto invisible group-hover:visible">
+              <MinimizeIcon />
+            </div>
+          </button>
         )}
         {!hideMaximizeButton && (
-          <Button
-            className="maximize"
+          <button
+            aria-label={maximized ? "Restore Down" : "Maximize"}
+            className={`w-3 h-3 rounded-full  flex
+          items-center
+          justify-center       group
+            ${allowResizing ? "bg-green-400 hover:bg-green-500" : "bg-gray-500 cursor-not-allowed"}`}
             disabled={!allowResizing}
             onClick={onMaximize}
+            type="button"
             {...label(maximized ? "Restore Down" : "Maximize")}
           >
-            {maximized ? <MaximizedIcon /> : <MaximizeIcon />}
-          </Button>
+            <div className="w-2 h-auto invisible group-hover:visible">
+              {maximized ? <MaximizedIcon /> : <MaximizeIcon />}
+            </div>
+          </button>
         )}
-        <Button
-          $short={hideMaximizeButton && hideMinimizeButton}
-          className="close"
+        <button
+          aria-label="Close"
+          className="w-3 h-3 bg-red-400 rounded-full
+        hover:bg-red-500 focus:outline-none  flex
+          items-center
+          justify-center group"
           onClick={onClose}
+          type="button"
           {...label("Close")}
         >
-          <CloseIcon />
-        </Button>
-      </nav>
+          <div className="w-1 h-auto invisible group-hover:visible">
+            <CloseIcon />
+          </div>
+        </button>
+      </div>
     </StyledTitlebar>
   );
 };
