@@ -1,6 +1,5 @@
 import { basename } from "path";
 import { useCallback, useEffect, useRef, useState } from "react";
-import Navigation from "components/apps/FileExplorer/Navigation";
 import StyledFileExplorer from "components/apps/FileExplorer/StyledFileExplorer";
 import { type ComponentProcessProps } from "components/system/Apps/RenderComponent";
 import { getIconFromIni } from "components/system/Files/FileEntry/functions";
@@ -106,7 +105,7 @@ const FileExplorer: FC<ComponentProcessProps> = ({ id }) => {
 
   return url ? (
     <StyledFileExplorer>
-      <Navigation ref={inputRef} hideSearch={Boolean(mountUrl)} id={id} />
+      {/* <Navigation ref={inputRef} hideSearch={Boolean(mountUrl)} id={id} /> */}
       <FileManager id={id} url={url} showStatusBar />
     </StyledFileExplorer>
   ) : // eslint-disable-next-line unicorn/no-null

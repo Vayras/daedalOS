@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { type MotionProps, type Variant } from "framer-motion";
 import { useProcesses } from "contexts/process";
-import { TASKBAR_HEIGHT, TRANSITIONS_IN_SECONDS } from "utils/constants";
+import { TRANSITIONS_IN_SECONDS } from "utils/constants";
 import { viewHeight, viewWidth } from "utils/functions";
 
 const active = {
@@ -38,7 +38,7 @@ const baseMinimize = {
 };
 
 const getMaxDimensions = (): Variant => ({
-  height: viewHeight() - TASKBAR_HEIGHT,
+  height: viewHeight() - 40,
   width: viewWidth(),
 });
 
@@ -66,7 +66,7 @@ const useWindowTransitions = (
       ...baseMaximize,
       ...getMaxDimensions(),
       x: 0 - windowX,
-      y: 0 - windowY,
+      y: 38 - windowY,
     });
     // eslint-disable-next-line react-hooks-addons/no-unused-deps
   }, [closing, componentWindow, maximized]);

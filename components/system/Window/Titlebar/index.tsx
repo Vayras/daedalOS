@@ -1,4 +1,6 @@
+// Titlebar.tsx
 import { memo, useCallback, useRef } from "react";
+import Navigation from "components/apps/FileExplorer/Navigation"; // Imported Navigation
 import rndDefaults from "components/system/Window/RndWindow/rndDefaults";
 import StyledTitlebar from "components/system/Window/Titlebar/StyledTitlebar";
 import {
@@ -10,12 +12,9 @@ import {
 import useTitlebarContextMenu from "components/system/Window/Titlebar/useTitlebarContextMenu";
 import useWindowActions from "components/system/Window/Titlebar/useWindowActions";
 import { useMenu } from "contexts/menu";
-import { type MenuState } from "contexts/menu/useMenuContextState";
 import { useProcesses } from "contexts/process";
 import { useSession } from "contexts/session";
 import useDoubleClick from "hooks/useDoubleClick";
-import Button from "styles/common/Button";
-import Icon from "styles/common/Icon";
 import { LONG_PRESS_DELAY_MS, PREVENT_SCROLL } from "utils/constants";
 import { haltEvent, label } from "utils/functions";
 
@@ -48,6 +47,8 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
   const touchStartTimeRef = useRef<number>(0);
   const touchStartPositionRef = useRef<DOMRect>();
   const touchesRef = useRef<TouchList>();
+  const inputRef = useRef<HTMLInputElement | null>(null); // Ref for Navigation
+
   const onTouchEnd = useCallback<React.TouchEventHandler<HTMLButtonElement>>(
     (event) => {
       const { x, y } = componentWindow?.getBoundingClientRect() || {};
@@ -63,10 +64,21 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
             touches: touchesRef.current,
           })
         );
+      } else {
+        // Trigger the normal button click on touch end if not a long press
+        if (event.currentTarget.ariaLabel === "Close") onClose();
+        if (event.currentTarget.ariaLabel === "Minimize") onMinimize();
+        if (
+          event.currentTarget.ariaLabel === "Maximize" ||
+          event.currentTarget.ariaLabel === "Restore Down"
+        ) {
+          onMaximize();
+        }
       }
     },
-    [componentWindow, titlebarContextMenu]
+    [componentWindow, titlebarContextMenu, onClose, onMinimize, onMaximize]
   );
+
   const onTouchStart = useCallback<React.TouchEventHandler<HTMLButtonElement>>(
     ({ touches }) => {
       if (componentWindow) {
@@ -88,47 +100,23 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
       onDrop={haltEvent}
       {...titlebarContextMenu}
     >
-      <Button
-        {...(!hideMaximizeButton && allowResizing && !closing
-          ? onClickMaximize
-          : {})}
-        onMouseDownCapture={({ button }) => {
-          if (button === 0 && Object.keys(menu).length > 0) {
-            setMenu(Object.create(null) as MenuState);
-          }
-        }}
-        onMouseUpCapture={() => {
-          if (componentWindow && componentWindow !== document.activeElement) {
-            componentWindow.focus(PREVENT_SCROLL);
-          }
-        }}
-        onTouchEndCapture={onTouchEnd}
-        onTouchStartCapture={onTouchStart}
-      >
-        <figure>
-          {!hideTitlebarIcon && (
-            <Icon alt={title} imgSize={16} src={icon} {...onClickClose} />
-          )}
-          <figcaption>{title}</figcaption>
-        </figure>
-      </Button>
-
       <div className="flex items-center space-x-2 mr-2">
         {!hideMinimizeButton && (
           <button
             aria-label="Minimize"
-            className="
-          w-3 h-3
-          bg-yellow-400
-          rounded-full
-          hover:bg-yellow-500
-          focus:outline-none
-          flex
-          items-center
-          justify-center
-          group
-        "
+            className="w-4 h-4
+            bg-yellow-400
+            rounded-full
+            hover:bg-yellow-500
+            focus:outline-none
+            flex
+            items-center
+            justify-center
+            group
+          "
             onClick={onMinimize}
+            onTouchEnd={onTouchEnd}
+            onTouchStart={onTouchStart}
             type="button"
             {...label("Minimize")}
           >
@@ -140,12 +128,14 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
         {!hideMaximizeButton && (
           <button
             aria-label={maximized ? "Restore Down" : "Maximize"}
-            className={`w-3 h-3 rounded-full  flex
-          items-center
-          justify-center       group
+            className={`w-4 h-4 rounded-full flex
+            items-center
+            justify-center group
             ${allowResizing ? "bg-green-400 hover:bg-green-500" : "bg-gray-500 cursor-not-allowed"}`}
             disabled={!allowResizing}
             onClick={onMaximize}
+            onTouchEnd={onTouchEnd}
+            onTouchStart={onTouchStart}
             type="button"
             {...label(maximized ? "Restore Down" : "Maximize")}
           >
@@ -156,11 +146,13 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
         )}
         <button
           aria-label="Close"
-          className="w-3 h-3 bg-red-400 rounded-full
-        hover:bg-red-500 focus:outline-none  flex
+          className="w-4 h-4 bg-red-400 rounded-full
+          hover:bg-red-500 focus:outline-none flex
           items-center
           justify-center group"
           onClick={onClose}
+          onTouchEnd={onTouchEnd}
+          onTouchStart={onTouchStart}
           type="button"
           {...label("Close")}
         >
@@ -169,6 +161,9 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
           </div>
         </button>
       </div>
+
+      {/* Integrated Navigation Component */}
+      <Navigation ref={inputRef} hideSearch={false} id={id} />
     </StyledTitlebar>
   );
 };
