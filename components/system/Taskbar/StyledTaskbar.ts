@@ -12,7 +12,7 @@ const StyledTaskbar = styled.nav`
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: 500px;
+  width: 400px;
   height: 75px;
   border-radius: 12px;
   z-index: 100000;
@@ -23,10 +23,6 @@ const StyledTaskbar = styled.nav`
   padding: 0 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
-
-  &:hover {
-    transform: translateX(-50%) scale(1.05);
-  }
 `;
 
 export default StyledTaskbar;
