@@ -1,6 +1,5 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { AnimatePresence } from "framer-motion";
 import SearchButton from "components/system/Taskbar/Search/SearchButton";
 import FileExplorerButton from "components/system/Taskbar/Search/FileExplorerButton";
 import StartButton from "components/system/Taskbar/StartButton";
@@ -74,39 +73,21 @@ const Taskbar: FC = () => {
   const hasAI = aiEnabled;
 
   return (
-    <>
-      <AnimatePresence initial={false} presenceAffectsLayout={false}>
-        {startMenuVisible && (
-          <StartMenu key="startMenu" toggleStartMenu={toggleStartMenu} />
-        )}
-        {searchVisible && <Search key="search" toggleSearch={toggleSearch} />}
-      </AnimatePresence>
-      <StyledTaskbar {...useTaskbarContextMenu()} {...FOCUSABLE_ELEMENT}>
-        <StartButton
-          startMenuVisible={startMenuVisible}
-          toggleStartMenu={toggleStartMenu}
+    <StyledTaskbar {...useTaskbarContextMenu()} {...FOCUSABLE_ELEMENT}>
+      <StartButton
+        startMenuVisible={startMenuVisible}
+        toggleStartMenu={toggleStartMenu}
+      />
+      <SearchButton searchVisible={searchVisible} toggleSearch={toggleSearch} />
+      {!fileExplorerVisible && ( // Hide File Explorer button once opened
+        <FileExplorerButton
+          fileExplorerVisible={fileExplorerVisible}
+          onClick={() => openApp(SUGGESTED[0])}
+          title={directory[SUGGESTED[0]].title}
         />
-        <SearchButton
-          searchVisible={searchVisible}
-          toggleSearch={toggleSearch}
-        />
-        {!fileExplorerVisible && ( // Hide File Explorer button once opened
-          <FileExplorerButton
-            fileExplorerVisible={fileExplorerVisible}
-            onClick={() => openApp(SUGGESTED[0])}
-            title={directory[SUGGESTED[0]].title}
-          />
-        )}
-        <TaskbarEntries clockWidth={clockWidth} hasAI={hasAI} />
-      </StyledTaskbar>
-
-      <AnimatePresence initial={false} presenceAffectsLayout={false}>
-        {calendarVisible && (
-          <Calendar key="calendar" toggleCalendar={toggleCalendar} />
-        )}
-        {aiVisible && <AIChat key="aiChat" toggleAI={toggleAI} />}
-      </AnimatePresence>
-    </>
+      )}
+      <TaskbarEntries clockWidth={clockWidth} hasAI={hasAI} />
+    </StyledTaskbar>
   );
 };
 
