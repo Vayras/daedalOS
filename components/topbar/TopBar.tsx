@@ -63,6 +63,7 @@ export const TopBar = () => {
       showSpotLight: !prevState.showSpotLight,
     }));
   };
+
   const toggleControlCenter = (): void => {
     setState((prevState) => ({
       ...prevState,
@@ -80,16 +81,17 @@ export const TopBar = () => {
   );
 
   const Search = dynamic(() => import("components/system/Taskbar/Search"));
+
   return (
-    <div className="w-full h-8 px-2 fixed top-0 flex justify-between text-sm text-white bg-gray-700/10 backdrop-blur-2xl shadow transition dark:bg-gray-800/50 z-10">
+    <div className="w-full h-8 px-2 fixed top-0 flex justify-between items-center text-sm text-white bg-gray-700/10 backdrop-blur-2xl shadow transition dark:bg-gray-800/50 z-10">
       <div
         ref={appleBtnRef}
-        className="flex flex-row items-center md:gap-4 sm:gap-1 h-8 my-auto px-1 cursor-pointer text-center justify-center rounded focus:outline-none"
+        className="flex flex-row items-center gap-2 h-8 my-auto px-1 cursor-pointer text-center justify-center rounded focus:outline-none"
         role="button"
         tabIndex={0}
       >
         <button
-          aria-label="Apple Menu" // Optional: Improves accessibility by providing a label
+          aria-label="Apple Menu"
           className="text-xl hover:bg-gray-100/30 px-1 h-6 rounded flex items-center"
           onClick={toggleAppleMenu}
           type="button"
@@ -133,8 +135,9 @@ export const TopBar = () => {
           toggleControlCenter={toggleControlCenter}
         />
       )}
-      <div className="flex flex-row items-center md:gap-2  h-8 my-auto px-1 cursor-default text-center">
-        <span className="hover:bg-gray-100/30 px-1 h-6 cursor-default rounded flex items-center hidden md:block">
+
+      <div className="flex flex-row items-center gap-2 h-8 my-auto px-1">
+        <span className="hover:bg-gray-100/30 px-1 h-6 cursor-default rounded flex items-center">
           <Battery />
         </span>
         <div
@@ -142,35 +145,30 @@ export const TopBar = () => {
           className="md:block hidden"
           onClick={toggleWifiMenu}
         >
-          {wifi ? (
-            <span className="text-lg hover:bg-gray-100/30 px-1 h-6 cursor-default rounded flex items-center">
-              <Icon icon="material-symbols:wifi" />
-            </span>
-          ) : (
-            <span className="text-lg hover:bg-gray-100/30 px-1 h-6 cursor-default rounded flex items-center">
-              <Icon icon="material-symbols:wifi-off" />
-            </span>
-          )}
+          <span className="text-lg hover:bg-gray-100/30 px-1 h-6 rounded flex items-center">
+            <Icon icon={wifi ? "material-symbols:wifi" : "material-symbols:wifi-off"} />
+          </span>
         </div>
 
         <span
-          className="text-lg hover:bg-gray-100/30 px-1 h-6 cursor-default rounded flex items-center"
+          className="text-lg hover:bg-gray-100/30 px-1 h-6 rounded flex items-center"
           onClick={toggleShowSpotlight}
         >
           <Icon icon="bx:search" />
         </span>
         <span
-          className="hover:bg-gray-100/30 px-1 h-6 cursor-default rounded flex items-center"
+          className="hover:bg-gray-100/30 px-1 h-6 rounded flex items-center"
           onClick={toggleControlCenter}
         >
           <CCMIcon size={16} />
         </span>
 
-        <span className="md:gap-2 gap-1 flex hover:bg-gray-100/30 px-1 h-6 cursor-default rounded flex items-center">
+        <span className="flex gap-1 hover:bg-gray-100/30 px-1 h-6 rounded flex items-center">
           <span>{format(state.date, "eee MMM d")}</span>
           <span>{format(state.date, "h:mm aa")}</span>
         </span>
       </div>
+
       <div className="absolute top-[500px] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         {searchVisible && <Search key="search" toggleSearch={toggleSearch} />}
       </div>

@@ -20,13 +20,14 @@ export default function Battery() {
   return (
     <div className="flex flex-row space-x-2 items-center">
       <span>{(batteryState.level * 100).toFixed(0)}%</span>
-      <div className="relative flex flex-row">
+      <div className="relative flex flex-row z-50">
         <span className="text-xl">
           <Icon icon="bi:battery" />
         </span>
+
         <div
-          className={`absolute rounded-[1px] h-2 top-1/2 -mt-1 ml-0.5 left-0 ${color()}`}
-          style={{ width: `${width()}rem` }}
+          className={`absolute rounded-[1px] h-2 top-1/2 -translate-y-1/2 left-[1px] ${color()} z-0`}
+          style={{ width: `${width() - 0.1}rem` }}
         />
         {batteryState.charging && (
           <span className="i-bi:lightning-charge-fill absolute inset-0 m-auto -translate-x-0.5 text-xs" />

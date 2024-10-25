@@ -284,7 +284,7 @@ const FileManager: FC<FileManagerProps> = ({
           </StyledFileManager>
         </>
       )}
-      {showStatusBar && (
+      {/* {showStatusBar && (
         <StatusBar
           count={loading ? 0 : fileKeys.length}
           directory={url}
@@ -296,7 +296,7 @@ const FileManager: FC<FileManagerProps> = ({
           }}
           view={view}
         />
-      )}
+      )} */}
     </>
   );
 };
