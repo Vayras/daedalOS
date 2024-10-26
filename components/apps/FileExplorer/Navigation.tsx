@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { Icon } from "@iconify/react";
 import AddressBar from "components/apps/FileExplorer/AddressBar";
 import SearchBar from "components/apps/FileExplorer/SearchBar";
 import StyledNavigation from "components/apps/FileExplorer/StyledNavigation";
@@ -14,11 +15,9 @@ import useTitlebarContextMenu from "components/system/Window/Titlebar/useTitleba
 import { useMenu } from "contexts/menu";
 import { useProcesses } from "contexts/process";
 import useHistory from "hooks/useHistory";
-import Button from "styles/common/Button";
 import { ROOT_NAME } from "utils/constants";
 import { haltEvent, label } from "utils/functions";
 import useResizeObserver from "hooks/useResizeObserver";
-import { LeftArrow, RightArrow } from "components/system/Taskbar/Search/Icons";
 
 type NavigationProps = {
   hideSearch: boolean;
@@ -81,28 +80,42 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
         onDragOver={haltEvent}
         onDrop={haltEvent}
       >
-        <Button
+        <button
           disabled={!canGoBack}
           onClick={() => moveHistory(-1)}
+          type="button"
           {...label(
             canGoBack
               ? `Back to ${basename(history[position - 1]) || ROOT_NAME}`
               : "Back"
           )}
         >
-          <LeftArrow />
-        </Button>
-        <Button
+          <Icon
+            height="1.2rem"
+            icon="weui:back-filled"
+            style={{ color: "white" }}
+            width="1.2rem"
+          />
+        </button>
+
+        <button
           disabled={!canGoForward}
           onClick={() => moveHistory(+1)}
+          type="button"
           {...label(
             canGoForward
               ? `Forward to ${basename(history[position + 1]) || ROOT_NAME}`
               : "Forward"
           )}
+          className="rotate-180 pt-1"
         >
-          <RightArrow />
-        </Button>
+          <Icon
+            height="1.2rem"
+            icon="weui:back-filled"
+            style={{ color: "white" }}
+            width="1.2rem"
+          />
+        </button>
 
         <AddressBar ref={inputRef} id={id} />
         {/^FileExplorer__?\/.*$/i.test(id) ||

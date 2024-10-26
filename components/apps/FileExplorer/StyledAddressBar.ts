@@ -16,8 +16,8 @@ const StyledAddressBar = styled.div`
     background-color: transparent;
     color: #fff;
     font-family: ${({ theme }) => theme.formats.systemFont};
-    font-size: 12px;
-    font-weight: 400;
+    font-size: 16px;
+    font-weight: 600;
     height: ${({ theme }) => theme.sizes.fileExplorer.navInputHeight - 2}px;
     padding-bottom: 2px;
     text-overflow: ellipsis;

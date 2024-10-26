@@ -145,7 +145,7 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
       {/^FileExplorer__?\/.*$/i.test(id) || id === "FileExplorer" ? (
         <Navigation ref={inputRef} hideSearch={false} id={id} />
       ) : (
-        <div className="flex justify-center items-center w-full mr-12">
+        <div className="flex justify-center items-center w-full mr-[160px] font-semibold">
           <span className="text-white ml-4">{directory.title || id}</span>
         </div>
       )}
