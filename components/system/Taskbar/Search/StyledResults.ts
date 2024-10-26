@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { ThinScrollBars } from "components/system/Taskbar/Search/styles";
-import ScrollBars from "styles/common/ScrollBars";
-import { THIN_SCROLLBAR_WIDTH } from "utils/constants";
 
 const StyledResults = styled.div`
-  color: #fff;
+  color: black;
+  border-radius: 10px;
+  margin-bottom: 10px;
   display: flex;
   height: ${({ theme }) =>
     `calc(100% - ${theme.sizes.search.headerHeight}px - ${theme.sizes.search.inputHeight}px)`};
@@ -13,13 +12,13 @@ const StyledResults = styled.div`
   width: 100%;
 
   .list {
-    ${ScrollBars(THIN_SCROLLBAR_WIDTH, -2, -1)}
-    ${ThinScrollBars}
-    background-color: rgba(40, 40, 40, 95%);
+    scrollbar-width: none;
+    background-color: #dadadb;
     overflow-y: auto;
     scrollbar-gutter: auto;
     width: 100%;
-
+    margin-bottom: 16px;
+    border-top-left-radius: 5px;
     li {
       &.active-item {
         background-color: rgba(30, 80, 115, 75%);

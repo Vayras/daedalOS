@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { Search as SearchIcon } from "components/apps/FileExplorer/NavigationIcons";
 import { NO_RESULTS, type TabName } from "components/system/Taskbar/Search";
 import ResultEntry from "components/system/Taskbar/Search/ResultEntry";
 import StyledResultsHeader from "components/system/Taskbar/Search/StyledResultsHeader";
@@ -51,7 +50,6 @@ const ResultSection: FC<ResultsSectionProps> = ({
       <ol>
         {noResults ? (
           <li className="no-results">
-            <SearchIcon />
             No results found for &apos;{searchTerm}&apos;
           </li>
         ) : (

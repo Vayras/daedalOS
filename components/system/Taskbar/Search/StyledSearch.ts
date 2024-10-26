@@ -1,29 +1,16 @@
 import { m as motion } from "framer-motion";
 import styled from "styled-components";
-import { SINGLE_LINE_HEIGHT_ADDITION } from "components/system/Taskbar/Search";
-import TaskbarPanel from "components/system/Taskbar/TaskbarPanel";
 
 type StyledSearchProps = {
   $singleLine: boolean;
 };
 
 const StyledSearch = styled(motion.nav)<StyledSearchProps>`
-  ${({ $singleLine, theme }) =>
-    TaskbarPanel(
-      theme.sizes.search.maxHeight +
-        ($singleLine ? SINGLE_LINE_HEIGHT_ADDITION : 0),
-      theme.sizes.search.size,
-      theme.sizes.taskbar.button.width,
-      true
-    )}
-
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 800px;
-  height: 20px;
-
+  width: 620px;
   backdrop-filter: ${({ theme }) => `blur(${theme.sizes.taskbar.panelBlur})`};
 
   @keyframes fade-in {
@@ -40,22 +27,23 @@ const StyledSearch = styled(motion.nav)<StyledSearchProps>`
 
     input {
       appearance: none;
-      background-color: #fff;
-      border: 2px solid rgb(0, 120, 215);
-      border-radius: 0;
+      background-color: #dadadb;
+      border-radius: 5px;
       color: #000;
       font-size: 15px;
-      height: 40px;
+      height: 60px;
       padding: 10px;
       padding-left: 37px;
       width: 100%;
+      margin-top: 10px;
 
       &::placeholder {
-        color: #000;
+        color: #a3a3a5;
         inset: 0;
         left: 37px;
         opacity: 100%;
         overflow: visible;
+        font-size: 20px;
       }
 
       &::-webkit-search-cancel-button {
@@ -64,11 +52,11 @@ const StyledSearch = styled(motion.nav)<StyledSearchProps>`
     }
 
     svg {
-      bottom: 12px;
-      height: 16px;
+      bottom: 20px;
+      width: 20px;
       left: 12px;
       position: absolute;
-      width: 16px;
+      width: 20px;
       z-index: 2;
     }
   }
@@ -85,6 +73,7 @@ const StyledSearch = styled(motion.nav)<StyledSearchProps>`
       place-items: center;
       pointer-events: none;
       user-select: none;
+      margin-left: 15px;
 
       svg {
         fill: #fff;

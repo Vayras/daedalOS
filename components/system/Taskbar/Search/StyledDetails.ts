@@ -1,16 +1,12 @@
 import styled from "styled-components";
-import { ThinScrollBars } from "components/system/Taskbar/Search/styles";
-import ScrollBars from "styles/common/ScrollBars";
-import { THIN_SCROLLBAR_WIDTH } from "utils/constants";
 
 const StyledDetails = styled.div`
-  ${ScrollBars(THIN_SCROLLBAR_WIDTH, -2, -1)}
-  ${ThinScrollBars}
-  background-color: rgba(20, 20, 20, 95%);
-  border: 8px solid rgba(30, 30, 30, 95%);
+  background-color: #dadadb;
   border-bottom: none;
   box-sizing: content-box;
   display: flex;
+    height: ${({ theme }) =>
+      `calc(100% - ${theme.sizes.search.headerHeight}px + ${theme.sizes.search.inputHeight}px)`};
   flex-direction: column;
   overflow-x: hidden;
   padding-top: 20px;
@@ -18,6 +14,9 @@ const StyledDetails = styled.div`
   position: relative;
   scrollbar-gutter: auto;
   width: 100%;
+  margin-bottom: 16px;
+  border-top-right-radius: 5px;
+  scrollbar-width: none;
 
   picture {
     padding-bottom: 18px;
@@ -77,7 +76,7 @@ const StyledDetails = styled.div`
     }
 
     td {
-      color: rgb(208, 208, 208);
+      color: black
       padding-right: 5px;
       word-break: break-all;
     }
@@ -87,7 +86,7 @@ const StyledDetails = styled.div`
         text-decoration: underline;
 
         &:hover {
-          color: #fff;
+          color: black
         }
       }
     }

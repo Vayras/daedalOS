@@ -25,19 +25,16 @@ import Details from "components/system/Taskbar/Search/Details";
 import ResultSection from "components/system/Taskbar/Search/ResultSection";
 import StyledResults from "components/system/Taskbar/Search/StyledResults";
 import StyledSearch from "components/system/Taskbar/Search/StyledSearch";
-import StyledTabs from "components/system/Taskbar/Search/StyledTabs";
 import useSearchInputTransition from "components/system/Taskbar/Search/useSearchInputTransition";
 import {
   SEARCH_BUTTON_TITLE,
   maybeCloseTaskbarMenu,
 } from "components/system/Taskbar/functions";
 import useTaskbarItemTransition from "components/system/Taskbar/useTaskbarItemTransition";
-import { CloseIcon } from "components/system/Window/Titlebar/WindowActionIcons";
 import { useFileSystem } from "contexts/fileSystem";
 import { useProcesses } from "contexts/process";
 import { type ProcessArguments } from "contexts/process/types";
 import { useSession } from "contexts/session";
-import Button from "styles/common/Button";
 import {
   FOCUSABLE_ELEMENT,
   KEYPRESS_DEBOUNCE_MS,
@@ -46,7 +43,7 @@ import {
   SHORTCUT_EXTENSION,
   VIDEOS_FOLDER,
 } from "utils/constants";
-import { label, preloadLibs } from "utils/functions";
+import { preloadLibs } from "utils/functions";
 import {
   FILE_INDEX,
   SEARCH_INPUT_PROPS,
@@ -288,7 +285,7 @@ const Search: FC<SearchProps> = ({ toggleSearch }) => {
                 (bestMatchElement as HTMLElement)?.click();
               }
             }}
-            placeholder="Type here to search"
+            placeholder="Spotlight Search"
             style={{
               caretColor: showCaret ? undefined : "transparent",
             }}
@@ -298,81 +295,49 @@ const Search: FC<SearchProps> = ({ toggleSearch }) => {
 
         {/* Only show results if searchTerm is not empty */}
         {searchTerm && (
-          <>
-            <StyledTabs>
-              {TABS.filter(
-                (tab) =>
-                  !(menuWidth < 325 && tab === "Videos") &&
-                  !(menuWidth < 260 && tab === "Photos")
-              ).map((tab) => (
-                // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
-                <li
-                  key={tab}
-                  className={tab === activeTab ? "active" : undefined}
-                  onClick={() => changeTab(tab)}
-                  {...label(
-                    tab === "All"
-                      ? "Find the most relevant results"
-                      : `Find results in ${tab}`
-                  )}
-                >
-                  {tab}
-                </li>
-              ))}
-            </StyledTabs>
-            <nav>
-              <Button
-                className="close-button"
-                onClick={() => toggleSearch(false)}
-                {...label("Close Search")}
-              >
-                <CloseIcon />
-              </Button>
-            </nav>
-            <StyledResults>
-              {(!singleLineView || !activeItem) && (
-                <div ref={listRef} className="list">
-                  <ResultSection
-                    activeItem={activeItem}
-                    activeTab={activeTab}
-                    openApp={openApp}
-                    results={[firstResult || { ref: NO_RESULTS }]}
-                    searchTerm={searchTerm}
-                    setActiveItem={setActiveItem}
-                    title={"Best match" as TabName}
-                    details
-                  />
-                  {results.length > 1 &&
-                    subResults.map(
-                      ([title, subResult]) =>
-                        (activeTab === "All" || activeTab === title) && (
-                          <ResultSection
-                            key={title}
-                            activeItem={activeItem}
-                            activeTab={activeTab}
-                            changeTab={changeTab}
-                            openApp={openApp}
-                            results={subResult.filter(
-                              (result) => firstResult !== result
-                            )}
-                            searchTerm={searchTerm}
-                            setActiveItem={setActiveItem}
-                            title={title as TabName}
-                          />
-                        )
-                    )}
-                </div>
-              )}
-              {activeItem && firstResult && (
-                <Details
+          <StyledResults>
+            {(!singleLineView || !activeItem) && (
+              <div ref={listRef} className="list">
+                <ResultSection
+                  activeItem={activeItem}
+                  activeTab={activeTab}
                   openApp={openApp}
+                  results={[firstResult || { ref: NO_RESULTS }]}
+                  searchTerm={searchTerm}
                   setActiveItem={setActiveItem}
-                  singleLineView={singleLineView}
-                  url={activeItem || firstResult?.ref}
+                  title={"Best match" as TabName}
+                  details
                 />
-              )}
-            </StyledResults>
-          </>
+                {results.length > 1 &&
+                  subResults.map(
+                    ([title, subResult]) =>
+                      (activeTab === "All" || activeTab === title) && (
+                        <ResultSection
+                          key={title}
+                          activeItem={activeItem}
+                          activeTab={activeTab}
+                          changeTab={changeTab}
+                          openApp={openApp}
+                          results={subResult.filter(
+                            (result) => firstResult !== result
+                          )}
+                          searchTerm={searchTerm}
+                          setActiveItem={setActiveItem}
+                          title={title as TabName}
+                        />
+                      )
+                  )}
+              </div>
+            )}
+            {activeItem && firstResult && (
+              <Details
+                openApp={openApp}
+                setActiveItem={setActiveItem}
+                singleLineView={singleLineView}
+                url={activeItem || firstResult?.ref}
+              />
+            )}
+          </StyledResults>
         )}
       </div>
     </StyledSearch>
