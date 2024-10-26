@@ -1,4 +1,4 @@
-import { memo, useCallback, useRef } from "react";
+import { memo, useCallback, useRef, useEffect, useState } from "react";
 import {
   type MotionValue,
   m,
@@ -17,6 +17,16 @@ const SUGGESTED = ["FileExplorer", "Terminal", "Messenger", "Browser", "Paint"];
 const Taskbar: FC = () => {
   const { open } = useProcesses();
   const mouseX = useMotionValue(Infinity);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Set breakpoint for mobile devices
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const openApp = useCallback(
     (pid: string, args?: ProcessArguments) => {
@@ -28,7 +38,7 @@ const Taskbar: FC = () => {
   return (
     <StyledTaskbar {...useTaskbarContextMenu()} {...FOCUSABLE_ELEMENT}>
       <m.div
-        className="mx-auto flex h-20 items-end gap-4 rounded-2xl px-4 pb-3 backdrop-blur-lg bg-white bg-opacity-20 shadow-lg"
+        className="mx-auto flex h-[60px] md:h-[70px] items-end justify-center gap-4 rounded-2xl px-4 pb-3 backdrop-blur-lg bg-white bg-opacity-20 shadow-lg"
         onMouseLeave={() => mouseX.set(Infinity)}
         onMouseMove={(e) => mouseX.set(e.pageX)}
         style={{ border: "1px solid darkgray" }}
@@ -37,6 +47,7 @@ const Taskbar: FC = () => {
           <AppIcon
             key={i}
             app={app}
+            isMobile={isMobile}
             mouseX={mouseX}
             openApp={() => openApp(app)}
           />
@@ -50,8 +61,10 @@ const AppIcon = ({
   mouseX,
   openApp,
   app,
+  isMobile,
 }: {
   app: string;
+  isMobile: boolean;
   mouseX: MotionValue;
   openApp: () => void;
 }) => {
@@ -62,7 +75,11 @@ const AppIcon = ({
     return val - bounds.x - bounds.width / 2;
   });
 
-  const widthSync = useTransform(distance, [-150, 0, 150], [60, 100, 60]);
+  const widthSync = useTransform(
+    distance,
+    [-150, 0, 150],
+    isMobile ? [40, 80, 40] : [50, 100, 50] // Adjust width for mobile
+  );
   const width = useSpring(widthSync, {
     damping: 12,
     mass: 0.1,
