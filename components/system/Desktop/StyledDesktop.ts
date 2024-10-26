@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
 const StyledDesktop = styled.main`
-  background-color: transparent;
+  background-image: url("/wallpaper-day.jpg");
+  background-size: cover;
+  background-position: center;
   contain: strict;
   height: 100%;
   inset: 0;
@@ -12,13 +14,11 @@ const StyledDesktop = styled.main`
 
   #loading-status {
     background-color: #fff;
-    border: 1px solid #000;
-    border-radius: 8px;
-    box-shadow: 0 0 50px 1px #000;
+    border-radius: 10px;
     display: none;
     font-weight: 600;
     left: 50%;
-    padding: 12px 15px;
+    padding: 15px;
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -34,6 +34,11 @@ const StyledDesktop = styled.main`
     top: 0;
     width: 100%;
     z-index: -1;
+  }
+
+  /* When the .dark class is added to the html element */
+  html.dark & {
+    background-image: url("/wallpaper-night.jpg");
   }
 `;
 

@@ -13,10 +13,7 @@ const styledBorder = ({
     : `1px solid ${theme.colors.titleBar.backgroundInactive}`;
 
 const StyledTitlebar = styled.header<StyledTitlebarProps>`
-  background-color: ${({ $foreground, theme }) =>
-    $foreground
-      ? theme.colors.titleBar.background
-      : theme.colors.titleBar.backgroundInactive};
+  background-color: #404040;
   border-bottom: ${styledBorder};
   display: flex;
   gap: 50px;

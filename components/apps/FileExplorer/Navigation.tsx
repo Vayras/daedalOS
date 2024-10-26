@@ -106,44 +106,7 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
         >
           <Forward />
         </Button>
-        {/* <Button
-          disabled={history.length === 1}
-          onClick={(event) => {
-            event.preventDefault();
 
-            if (isRecentMenuOpen) setMenu(Object.create(null) as MenuState);
-            else {
-              const {
-                height = 0,
-                y = 0,
-                x = 0,
-              } = navRef.current?.getBoundingClientRect() || {};
-
-              onContextMenuCapture(
-                (x || y) && height
-                  ? ({
-                      pageX: x,
-                      pageY: y + height - CONTEXT_MENU_OFFSET,
-                    } as CaptureTriggerEvent)
-                  : event
-              );
-            }
-          }}
-          {...label("Recent locations")}
-        >
-          <Down />
-        </Button> */}
-        {/* <Button
-          disabled={url === "/"}
-          onClick={() => changeUrl(id, dirname(url))}
-          {...label(
-            url === "/"
-              ? "Up one level"
-              : `Up to "${upTo === "" ? ROOT_NAME : upTo}"`
-          )}
-        >
-          <Up />
-        </Button> */}
         <AddressBar ref={inputRef} id={id} />
         {shouldShowSearchBar() && <SearchBar id={id} />}
       </StyledNavigation>
