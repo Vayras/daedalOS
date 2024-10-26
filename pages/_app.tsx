@@ -7,6 +7,7 @@ import { MenuProvider } from "contexts/menu";
 import { ProcessProvider } from "contexts/process";
 import { SessionProvider } from "contexts/session";
 import { ViewportProvider } from "contexts/viewport";
+import { MusicProvider } from "contexts/MusicContext";
 import "styles/global.css";
 import "styles/component.css";
 
@@ -19,7 +20,9 @@ const App = ({ Component, pageProps }: AppProps): React.ReactElement => (
             <Metadata />
             <StyledApp>
               <MenuProvider>
-                <Component {...pageProps} />
+                <MusicProvider>
+                  <Component {...pageProps} />
+                </MusicProvider>
               </MenuProvider>
             </StyledApp>
           </ErrorBoundary>

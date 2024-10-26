@@ -4,6 +4,7 @@ import MusicPlayer from "components/topbar/MusicPlayer";
 import { FullWidthSlider } from "components/topbar/Slider";
 import { useClickOutside } from "hooks/useClickOutside";
 import { useViewport } from "contexts/viewport";
+import { useMusic } from "contexts/MusicContext";
 
 interface ControlCenterProps {
   btnRef: React.RefObject<HTMLDivElement>;
@@ -21,10 +22,10 @@ const ControlCenter = ({
   const [dark, setDark] = useState(false);
   const [brightness, setBrightness] = useState(70);
   const [wifi, setWifi] = useState(true);
-  const [volume, setVolume] = useState(70);
   const [bluetooth, setBluetooth] = useState(true);
   const [airdrop, setAirdrop] = useState(true);
   const { fullscreenElement, toggleFullscreen } = useViewport();
+  const { volume, setVolume } = useMusic();
 
   const toggleDark = (): void => {
     setDark(!dark);
@@ -37,7 +38,7 @@ const ControlCenter = ({
   };
 
   const handleVolumeChange = (value: number): void => {
-    setVolume(value);
+    setVolume(value / 100);
   };
 
   return (
@@ -201,7 +202,7 @@ const ControlCenter = ({
         icon="volume-2"
         minimum={0}
         text="Volume"
-        value={volume}
+        value={volume * 100} // Convert back to 0-100 range for UI
       />
 
       {/* Music Player */}

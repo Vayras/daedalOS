@@ -1,6 +1,6 @@
 // Titlebar.tsx
 import { memo, useCallback, useRef } from "react";
-import Navigation from "components/apps/FileExplorer/Navigation"; // Imported Navigation
+import Navigation from "components/apps/FileExplorer/Navigation";
 import rndDefaults from "components/system/Window/RndWindow/rndDefaults";
 import StyledTitlebar from "components/system/Window/Titlebar/StyledTitlebar";
 import {
@@ -30,6 +30,7 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
     hideMaximizeButton,
     hideMinimizeButton,
     maximized,
+    directory = {},
   } = process || {};
   const { foregroundId } = useSession();
   const isForeground = id === foregroundId;
@@ -38,7 +39,7 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
   const touchStartTimeRef = useRef<number>(0);
   const touchStartPositionRef = useRef<DOMRect>();
   const touchesRef = useRef<TouchList>();
-  const inputRef = useRef<HTMLInputElement | null>(null); // Ref for Navigation
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const onTouchEnd = useCallback<React.TouchEventHandler<HTMLButtonElement>>(
     (event) => {
@@ -56,7 +57,6 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
           })
         );
       } else {
-        // Trigger the normal button click on touch end if not a long press
         if (event.currentTarget.ariaLabel === "Close") onClose();
         if (event.currentTarget.ariaLabel === "Minimize") onMinimize();
         if (
@@ -95,16 +95,7 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
         {!hideMinimizeButton && (
           <button
             aria-label="Minimize"
-            className="w-4 h-4
-            bg-yellow-400
-            rounded-full
-            hover:bg-yellow-500
-            focus:outline-none
-            flex
-            items-center
-            justify-center
-            group
-          "
+            className="w-4 h-4 bg-yellow-400 rounded-full hover:bg-yellow-500 focus:outline-none flex items-center justify-center group"
             onClick={() => onMinimize()}
             onTouchEnd={onTouchEnd}
             onTouchStart={onTouchStart}
@@ -119,10 +110,11 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
         {!hideMaximizeButton && (
           <button
             aria-label={maximized ? "Restore Down" : "Maximize"}
-            className={`w-4 h-4 rounded-full flex
-            items-center
-            justify-center group
-            ${allowResizing ? "bg-green-400 hover:bg-green-500" : "bg-gray-500 cursor-not-allowed"}`}
+            className={`w-4 h-4 rounded-full flex items-center justify-center group ${
+              allowResizing
+                ? "bg-green-400 hover:bg-green-500"
+                : "bg-gray-500 cursor-not-allowed"
+            }`}
             disabled={!allowResizing}
             onClick={onMaximize}
             onTouchEnd={onTouchEnd}
@@ -137,10 +129,7 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
         )}
         <button
           aria-label="Close"
-          className="w-4 h-4 bg-red-400 rounded-full
-          hover:bg-red-500 focus:outline-none flex
-          items-center
-          justify-center group"
+          className="w-4 h-4 bg-red-400 rounded-full hover:bg-red-500 focus:outline-none flex items-center justify-center group"
           onClick={onClose}
           onTouchEnd={onTouchEnd}
           onTouchStart={onTouchStart}
@@ -153,8 +142,13 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
         </button>
       </div>
 
-      {/* Integrated Navigation Component */}
-      <Navigation ref={inputRef} hideSearch={false} id={id} />
+      {/^FileExplorer__?\/.*$/i.test(id) || id === "FileExplorer" ? (
+        <Navigation ref={inputRef} hideSearch={false} id={id} />
+      ) : (
+        <div className="flex justify-center items-center w-full mr-12">
+          <span className="text-white ml-4">{directory.title || id}</span>
+        </div>
+      )}
     </StyledTitlebar>
   );
 };

@@ -1,48 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
+// components/topbar/MusicPlayer.tsx
+import type React from "react";
 import { Icon } from "@iconify/react";
+import { useMusic } from "contexts/MusicContext";
 
-interface MusicPlayerProps {
-  volume: number;
-}
-
-const MusicPlayer = ({ volume }: MusicPlayerProps) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef(null);
-
-  const togglePlayPause = () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play().catch((error) => {
-        console.error("Error playing audio:", error);
-      });
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  // Check if audio is loaded before playing
-  useEffect(() => {
-    const audio = audioRef.current;
-    const handleLoadError = () => {
-      console.error("Audio failed to load.");
-    };
-    if (audio) {
-      audio.addEventListener("error", handleLoadError);
-      return () => {
-        audio.removeEventListener("error", handleLoadError);
-      };
-    }
-  }, []);
-
-  // Set the audio volume whenever it changes
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume; // Volume should be between 0 and 1
-    }
-  }, [volume]);
+const MusicPlayer = (): React.JSX.Element => {
+  const { isPlaying, togglePlayPause } = useMusic();
 
   return (
-    <div className="bg-gray-200 dark:bg-[#34414f] p-2 rounded-lg flex items-center opacity-90 z-1 rounded-xl shadow-lg">
+    <div className="bg-gray-200 dark:bg-[#34414f] p-2 rounded-lg flex items-center opacity-90 shadow-lg">
       <img
         alt="Sunflower"
         className="w-10 h-10 rounded-lg mr-2"
@@ -59,13 +24,13 @@ const MusicPlayer = ({ volume }: MusicPlayerProps) => {
       <button
         className="ml-auto text-black mx-4 dark:text-white"
         onClick={togglePlayPause}
+        type="button"
       >
         <Icon
           icon={isPlaying ? "ph:pause-fill" : "ph:play-fill"}
           style={{ fontSize: "16px" }}
         />
       </button>
-      <audio ref={audioRef} src="music/sunflower.mp3" />
     </div>
   );
 };

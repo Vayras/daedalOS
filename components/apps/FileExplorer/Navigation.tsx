@@ -8,7 +8,6 @@ import {
   useState,
 } from "react";
 import AddressBar from "components/apps/FileExplorer/AddressBar";
-import { Back, Forward } from "components/apps/FileExplorer/NavigationIcons";
 import SearchBar from "components/apps/FileExplorer/SearchBar";
 import StyledNavigation from "components/apps/FileExplorer/StyledNavigation";
 import useTitlebarContextMenu from "components/system/Window/Titlebar/useTitlebarContextMenu";
@@ -19,6 +18,7 @@ import Button from "styles/common/Button";
 import { ROOT_NAME } from "utils/constants";
 import { haltEvent, label } from "utils/functions";
 import useResizeObserver from "hooks/useResizeObserver";
+import { LeftArrow, RightArrow } from "components/system/Taskbar/Search/Icons";
 
 type NavigationProps = {
   hideSearch: boolean;
@@ -74,9 +74,6 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
 
     useResizeObserver(navRef.current, resizeCallback);
 
-    const shouldShowSearchBar = () =>
-      !hideSearch && !removeSearch && id === "FileExplorer";
-
     return (
       <StyledNavigation
         ref={navRef}
@@ -93,7 +90,7 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
               : "Back"
           )}
         >
-          <Back />
+          <LeftArrow />
         </Button>
         <Button
           disabled={!canGoForward}
@@ -104,11 +101,12 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
               : "Forward"
           )}
         >
-          <Forward />
+          <RightArrow />
         </Button>
 
         <AddressBar ref={inputRef} id={id} />
-        {shouldShowSearchBar() && <SearchBar id={id} />}
+        {/^FileExplorer__?\/.*$/i.test(id) ||
+          (id === "FileExplorer" && <SearchBar id={id} />)}
       </StyledNavigation>
     );
   }

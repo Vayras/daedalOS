@@ -25,6 +25,14 @@ export const RightArrow = memo(() => (
     <path d="m257.5 977.5 465-465.5-465-465.5 45-45 511 510.5-511 510.5z" />
   </svg>
 ));
+export const LeftArrow = memo(() => (
+  <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="m257.5 977.5 465-465.5-465-465.5 45-45 511 510.5-511 510.5z"
+      transform="scale(-1, 1) translate(-1024, 0)"
+    />
+  </svg>
+));
 
 export const Open = memo(() => (
   <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">

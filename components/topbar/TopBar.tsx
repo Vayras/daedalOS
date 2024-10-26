@@ -87,7 +87,7 @@ export const TopBar = () => {
   );
 
   return (
-    <div className="w-full h-8 px-2 fixed top-0 flex justify-between items-center text-sm text-white bg-gray-700/10 backdrop-blur-2xl shadow transition dark:bg-gray-800/50 z-10">
+    <div className="w-full h-8 md:px-2 fixed top-0 flex justify-between items-center text-sm text-white bg-gray-700/10 backdrop-blur-2xl shadow transition dark:bg-gray-800/50 z-10">
       <div
         ref={appleBtnRef}
         className="flex flex-row items-center gap-2 h-8 my-auto px-1 cursor-pointer text-center justify-center rounded focus:outline-none"
@@ -141,7 +141,7 @@ export const TopBar = () => {
       )}
 
       <div className="flex flex-row items-center gap-2 h-8 my-auto px-1">
-        <span className="hover:bg-gray-100/30 px-1 h-6 cursor-default rounded flex items-center">
+        <span className="hover:bg-gray-100/30 px-1 h-6 cursor-default rounded flex items-center invisible md:visible">
           <Battery />
         </span>
         <div
@@ -171,7 +171,7 @@ export const TopBar = () => {
           <CCMIcon size={16} />
         </span>
 
-        <span className="flex gap-1 hover:bg-gray-100/30 px-1 h-6 rounded flex items-center">
+        <span className=" gap-1 hover:bg-gray-100/30 px-1 h-6 rounded flex items-center">
           <span>{format(state.date, "eee MMM d")}</span>
           <span>{format(state.date, "h:mm aa")}</span>
         </span>

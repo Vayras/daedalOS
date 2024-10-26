@@ -67,7 +67,6 @@ const StyledTitlebar = styled.header<StyledTitlebarProps>`
     display: flex;
 
     button {
-      border-left: ${styledBorder};
       box-sizing: content-box;
       display: flex;
       place-content: center;
@@ -91,9 +90,6 @@ const StyledTitlebar = styled.header<StyledTitlebarProps>`
       }
 
       &:hover {
-        background-color: ${({ theme }) =>
-          theme.colors.titleBar.backgroundHover};
-
         svg {
           fill: ${({ theme }) => theme.colors.titleBar.text};
         }
@@ -105,7 +101,7 @@ const StyledTitlebar = styled.header<StyledTitlebarProps>`
       }
 
       &:active {
-        background-color: rgb(51, 51, 51);
+        background-color: transparent;
 
         &.close {
           background-color: rgb(139, 10, 20);
