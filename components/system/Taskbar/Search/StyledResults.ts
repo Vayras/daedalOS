@@ -81,7 +81,7 @@ const StyledResults = styled.div`
 
           figcaption {
             h1 {
-              font-size: 14px;
+              font-size: 14 px;
               font-weight: 300;
               white-space: nowrap;
             }
@@ -109,13 +109,13 @@ const StyledResults = styled.div`
         width: 26px;
 
         svg {
-          fill: #fff;
+          fill: black;
           height: 16px;
           width: 16px;
         }
       }
 
-      &:hover {
+      /* &:hover {
         background-color: rgba(100, 100, 100, 95%);
 
         div.select {
@@ -136,7 +136,7 @@ const StyledResults = styled.div`
 
       div.select:hover {
         background-color: rgba(100, 100, 100, 95%);
-      }
+      } */
     }
   }
 `;

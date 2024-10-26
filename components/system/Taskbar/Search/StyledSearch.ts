@@ -6,10 +6,10 @@ type StyledSearchProps = {
 };
 
 const StyledSearch = styled(motion.nav)<StyledSearchProps>`
-  position: absolute;
-  top: 50%;
+  position: fixed;
   left: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 60px;
+  transform: translateX(-50%);
   width: 620px;
   backdrop-filter: ${({ theme }) => `blur(${theme.sizes.taskbar.panelBlur})`};
 

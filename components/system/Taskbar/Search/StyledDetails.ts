@@ -101,23 +101,20 @@ const StyledDetails = styled.div`
 
     li {
       button {
-        color: #fff;
+        color:black;
         display: flex;
         font-size: 12px;
         padding: 8px 18px;
         place-items: start;
 
         svg {
-          fill: #fff;
+          color:black;
           height: 16px;
           margin-right: 12px;
           width: 16px;
         }
       }
 
-      &:hover {
-        background-color: rgb(42, 42, 42);
-      }
     }
   }
 

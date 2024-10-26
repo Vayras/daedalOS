@@ -49,7 +49,7 @@ const ResultSection: FC<ResultsSectionProps> = ({
       </StyledResultsHeader>
       <ol>
         {noResults ? (
-          <li className="no-results">
+          <li className="no-results ml-[15px]">
             No results found for &apos;{searchTerm}&apos;
           </li>
         ) : (

@@ -11,10 +11,6 @@ const StyledResultsHeader = styled.figcaption`
     pointer-events: none;
     user-select: none;
   }
-
-  &:hover {
-    background-color: rgba(60, 60, 60, 95%);
-  }
 `;
 
 export default StyledResultsHeader;
