@@ -28,9 +28,10 @@ const Taskbar: FC = () => {
   return (
     <StyledTaskbar {...useTaskbarContextMenu()} {...FOCUSABLE_ELEMENT}>
       <m.div
-        className="mx-auto flex h-20 items-end gap-4 rounded-2xl bg-gray-700 px-4 pb-3"
+        className="mx-auto flex h-20 items-end gap-4 rounded-2xl px-4 pb-3 backdrop-blur-lg bg-white bg-opacity-20 shadow-lg"
         onMouseLeave={() => mouseX.set(Infinity)}
         onMouseMove={(e) => mouseX.set(e.pageX)}
+        style={{ border: "1px solid darkgray" }}
       >
         {SUGGESTED.map((app, i) => (
           <AppIcon

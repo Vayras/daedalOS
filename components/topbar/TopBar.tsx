@@ -7,6 +7,8 @@ import SpotlightSearch from "components/topbar/spotlight";
 import WifiMenu from "components/topbar/WifiMenu";
 import AppleMenu from "components/topbar/AppleMenu";
 import Battery from "components/topbar/Battery";
+import { type ProcessArguments } from "contexts/process/types";
+import { useProcesses } from "contexts/process";
 
 const CCMIcon = ({ size }: { size: number }) => (
   <svg
@@ -57,13 +59,6 @@ export const TopBar = () => {
     }));
   };
 
-  const toggleShowSpotlight = (): void => {
-    setState((prevState) => ({
-      ...prevState,
-      showSpotLight: !prevState.showSpotLight,
-    }));
-  };
-
   const toggleControlCenter = (): void => {
     setState((prevState) => ({
       ...prevState,
@@ -81,6 +76,15 @@ export const TopBar = () => {
   );
 
   const Search = dynamic(() => import("components/system/Taskbar/Search"));
+
+  const { open } = useProcesses();
+
+  const openApp = useCallback(
+    (pid: string, args?: ProcessArguments) => {
+      open(pid, args);
+    },
+    [open]
+  );
 
   return (
     <div className="w-full h-8 px-2 fixed top-0 flex justify-between items-center text-sm text-white bg-gray-700/10 backdrop-blur-2xl shadow transition dark:bg-gray-800/50 z-10">
@@ -101,7 +105,7 @@ export const TopBar = () => {
         <button
           aria-label="Finder"
           className="font-semibold hover:bg-gray-100/30 px-1 h-6 rounded flex items-center"
-          onClick={() => toggleSearch()}
+          onClick={() => openApp("FileExplorer")}
           type="button"
         >
           Finder
@@ -146,13 +150,17 @@ export const TopBar = () => {
           onClick={toggleWifiMenu}
         >
           <span className="text-lg hover:bg-gray-100/30 px-1 h-6 rounded flex items-center">
-            <Icon icon={wifi ? "material-symbols:wifi" : "material-symbols:wifi-off"} />
+            <Icon
+              icon={
+                wifi ? "material-symbols:wifi" : "material-symbols:wifi-off"
+              }
+            />
           </span>
         </div>
 
         <span
           className="text-lg hover:bg-gray-100/30 px-1 h-6 rounded flex items-center"
-          onClick={toggleShowSpotlight}
+          onClick={() => toggleSearch()}
         >
           <Icon icon="bx:search" />
         </span>
