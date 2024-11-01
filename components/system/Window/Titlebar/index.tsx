@@ -91,22 +91,20 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
       onDrop={haltEvent}
       {...titlebarContextMenu}
     >
-      <div className="flex items-center space-x-2 ml-3">
-        {!hideMinimizeButton && (
-          <button
-            aria-label="Minimize"
-            className="w-4 h-4 bg-yellow-400 rounded-full hover:bg-yellow-500 focus:outline-none flex items-center justify-center group"
-            onClick={() => onMinimize()}
-            onTouchEnd={onTouchEnd}
-            onTouchStart={onTouchStart}
-            type="button"
-            {...label("Minimize")}
-          >
-            <div className="w-2 h-auto invisible group-hover:visible">
-              <MinimizeIcon />
-            </div>
-          </button>
-        )}
+      <div className="flex items-center  space-x-2 ml-3">
+        <button
+          aria-label="Close"
+          className="w-4 h-4 bg-red-400 rounded-full hover:bg-red-500 focus:outline-none flex items-center justify-center group"
+          onClick={onClose}
+          onTouchEnd={onTouchEnd}
+          onTouchStart={onTouchStart}
+          type="button"
+          {...label("Close")}
+        >
+          <div className="w-1 h-auto invisible group-hover:visible">
+            <CloseIcon />
+          </div>
+        </button>
         {!hideMaximizeButton && (
           <button
             aria-label={maximized ? "Restore Down" : "Maximize"}
@@ -127,19 +125,22 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
             </div>
           </button>
         )}
-        <button
-          aria-label="Close"
-          className="w-4 h-4 bg-red-400 rounded-full hover:bg-red-500 focus:outline-none flex items-center justify-center group"
-          onClick={onClose}
-          onTouchEnd={onTouchEnd}
-          onTouchStart={onTouchStart}
-          type="button"
-          {...label("Close")}
-        >
-          <div className="w-1 h-auto invisible group-hover:visible">
-            <CloseIcon />
-          </div>
-        </button>
+
+        {!hideMinimizeButton && (
+          <button
+            aria-label="Minimize"
+            className="w-4 h-4 bg-yellow-400 rounded-full hover:bg-yellow-500 focus:outline-none flex items-center justify-center group"
+            onClick={() => onMinimize()}
+            onTouchEnd={onTouchEnd}
+            onTouchStart={onTouchStart}
+            type="button"
+            {...label("Minimize")}
+          >
+            <div className="w-2 h-auto invisible group-hover:visible">
+              <MinimizeIcon />
+            </div>
+          </button>
+        )}
       </div>
 
       {/^FileExplorer__?\/.*$/i.test(id) || id === "FileExplorer" ? (

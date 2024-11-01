@@ -32,6 +32,11 @@ const directory: Processes = {
     icon: "/System/Icons/chromium.webp",
     title: "Browser",
   },
+  Calculator: {
+    Component: dynamic(() => import("components/apps/Calculator")),
+    icon: "/System/Icons/calculator.webp", // Replace with the actual path to your calculator icon
+    title: "Calculator",
+  },
   ClassiCube: {
     Component: dynamic(() => import("components/apps/ClassiCube")),
     backgroundColor: "#201E20",

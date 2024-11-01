@@ -9,7 +9,6 @@ import {
 } from "react";
 import { Icon } from "@iconify/react";
 import AddressBar from "components/apps/FileExplorer/AddressBar";
-import SearchBar from "components/apps/FileExplorer/SearchBar";
 import StyledNavigation from "components/apps/FileExplorer/StyledNavigation";
 import useTitlebarContextMenu from "components/system/Window/Titlebar/useTitlebarContextMenu";
 import { useMenu } from "contexts/menu";
@@ -118,8 +117,8 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
         </button>
 
         <AddressBar ref={inputRef} id={id} />
-        {/^FileExplorer__?\/.*$/i.test(id) ||
-          (id === "FileExplorer" && <SearchBar id={id} />)}
+        {/* {/^FileExplorer__?\/.*$/i.test(id) ||
+          (id === "FileExplorer" && <SearchBar id={id} />)} */}
       </StyledNavigation>
     );
   }

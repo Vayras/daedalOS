@@ -1,3 +1,6 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable sonarjs/no-array-index-key */
+/* eslint-disable no-use-before-define */
 import { memo, useCallback, useRef, useEffect, useState } from "react";
 import {
   type MotionValue,
@@ -12,7 +15,14 @@ import { FOCUSABLE_ELEMENT } from "utils/constants";
 import { useProcesses } from "contexts/process";
 import { type ProcessArguments } from "contexts/process/types";
 
-const SUGGESTED = ["FileExplorer", "Terminal", "Messenger", "Browser", "Paint"];
+const SUGGESTED = [
+  "FileExplorer",
+  "Terminal",
+  "Messenger",
+  "Browser",
+  "Paint",
+  "Calculator",
+];
 
 const Taskbar: FC = () => {
   const { open } = useProcesses();
