@@ -28,7 +28,7 @@ if (typeof window !== "undefined") {
 }
 
 export const MIN_WINDOW_HEIGHT = isMobile ? 520 : 500;
-export const MIN_WINDOW_WIDTH = isMobile ? window.innerWidth : 820;
+export const MIN_WINDOW_WIDTH = isMobile ? window.innerWidth : 320;
 
 const rndDefaults = {
   cancel: ".cancel",
