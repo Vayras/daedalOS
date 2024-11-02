@@ -22,6 +22,8 @@ const SUGGESTED = [
   "Browser",
   "Paint",
   "Calculator",
+  "NotesApp",
+  "AppleMusic",
 ];
 
 const Taskbar: FC = () => {

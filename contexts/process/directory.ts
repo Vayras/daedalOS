@@ -3,6 +3,11 @@ import { type Processes } from "contexts/process/types";
 import { FOLDER_ICON, TASKBAR_HEIGHT } from "utils/constants";
 
 const directory: Processes = {
+  AppleMusic: {
+    Component: dynamic(() => import("components/apps/AppleMusic")),
+    icon: "/System/Icons/calculator.webp", // Replace with the actual path to your calculator icon
+    title: "Calculator",
+  },
   BoxedWine: {
     Component: dynamic(() => import("components/apps/BoxedWine")),
     allowResizing: false,
@@ -34,7 +39,7 @@ const directory: Processes = {
   },
   Calculator: {
     Component: dynamic(() => import("components/apps/Calculator")),
-    icon: "/System/Icons/calculator.webp", // Replace with the actual path to your calculator icon
+    icon: "/System/calc.jpg",  // Replace with the actual path to your calculator icon
     title: "Calculator",
   },
   ClassiCube: {
@@ -165,6 +170,11 @@ const directory: Processes = {
     ],
     icon: "/System/Icons/monaco.webp",
     title: "Monaco Editor",
+  },
+  NotesApp: {
+    Component: dynamic(() => import("components/apps/NotesApp")),
+    icon: "/System/Icons/calculator.webp",
+    title: "NotesApp",
   },
   OpenType: {
     Component: dynamic(() => import("components/apps/OpenType")),
