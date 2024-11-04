@@ -226,9 +226,9 @@ export const TEST_APP_CONTAINER_APP_TITLE = (file: string | null): string =>
   `${file || ""}.url - ${TEST_APP_CONTAINER_APP}`;
 
 export const TEST_APP = "FileExplorer";
-export const TEST_APP_TITLE = /^My PC$/;
-export const TEST_APP_TITLE_TEXT = "My PC";
-export const TEST_APP_ICON = /\/pc2\.(webp|png)$/;
+export const TEST_APP_TITLE = /^Machintosh HD$/;
+export const TEST_APP_TITLE_TEXT = "Machintosh HD";
+export const TEST_APP_ICON = /\/pc\.(webp|png)$/;
 
 export const TEST_DESKTOP_FILE = /^Public$/;
 export const TEST_ROOT_ARCHIVE = /^archive.zip$/;
