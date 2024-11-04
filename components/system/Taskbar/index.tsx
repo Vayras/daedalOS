@@ -1,4 +1,4 @@
-import { memo, useCallback, useRef, useEffect, useState } from "react";
+import React, { memo, useCallback, useRef, useEffect, useState } from "react";
 import {
   type MotionValue,
   m,
@@ -24,6 +24,8 @@ const SUGGESTED = [
   "AppleMusic",
 ];
 
+const SUGGESTEDMOBILE = ["FileExplorer", "Terminal", "NotesApp", "AppleMusic"];
+
 // Generic Icon component
 const Icon = ({
   mouseX,
@@ -37,7 +39,7 @@ const Icon = ({
   mouseX: MotionValue<number>;
   onClick: () => void;
   src: string;
-}) => {
+}): React.JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
 
   const distance = useTransform(mouseX, (val) => {
@@ -73,10 +75,10 @@ const Taskbar: FC = () => {
   const { open } = useProcesses();
   const mouseX = useMotionValue(Infinity);
   const [isMobile, setIsMobile] = useState(false);
-  const [isLaunchpadOpen, setLaunchpadOpen] = useState(false);
+  const [isLaunchpadOpen, setIsLaunchpadOpen] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
+    const handleResize = (): void => {
       setIsMobile(window.innerWidth <= 768); // Set breakpoint for mobile devices
     };
     handleResize();
@@ -91,7 +93,8 @@ const Taskbar: FC = () => {
     [open]
   );
 
-  const toggleLaunchpad = () => setLaunchpadOpen((prev) => !prev);
+  const toggleLaunchpad = (): void => setIsLaunchpadOpen((prev) => !prev);
+  const appList = isMobile ? SUGGESTEDMOBILE : SUGGESTED;
 
   return (
     <StyledTaskbar {...useTaskbarContextMenu()} {...FOCUSABLE_ELEMENT}>
@@ -111,7 +114,7 @@ const Taskbar: FC = () => {
         />
 
         {/* Other App Icons */}
-        {SUGGESTED.map((app, i) => (
+        {appList.map((app, i) => (
           <Icon
             key={i}
             alt={`${app} icon`}
