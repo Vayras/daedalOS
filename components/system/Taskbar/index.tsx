@@ -1,6 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable sonarjs/no-array-index-key */
-/* eslint-disable no-use-before-define */
 import { memo, useCallback, useRef, useEffect, useState } from "react";
 import {
   type MotionValue,
@@ -13,6 +10,7 @@ import StyledTaskbar from "components/system/Taskbar/StyledTaskbar";
 import useTaskbarContextMenu from "components/system/Taskbar/useTaskbarContextMenu";
 import { FOCUSABLE_ELEMENT } from "utils/constants";
 import { useProcesses } from "contexts/process";
+import LaunchpadModal from "components/system/Taskbar/LaunchpadModal";
 import { type ProcessArguments } from "contexts/process/types";
 
 const SUGGESTED = [
@@ -26,10 +24,56 @@ const SUGGESTED = [
   "AppleMusic",
 ];
 
+// Generic Icon component
+const Icon = ({
+  mouseX,
+  onClick,
+  src,
+  alt,
+  isMobile,
+}: {
+  alt: string;
+  isMobile: boolean;
+  mouseX: MotionValue<number>;
+  onClick: () => void;
+  src: string;
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const distance = useTransform(mouseX, (val) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { width: 0, x: 0 };
+    return val - bounds.x - bounds.width / 2;
+  });
+
+  const widthSync = useTransform(
+    distance,
+    [-150, 0, 150],
+    isMobile ? [40, 80, 40] : [50, 100, 50]
+  );
+
+  const width = useSpring(widthSync, {
+    damping: 12,
+    mass: 0.1,
+    stiffness: 150,
+  });
+
+  return (
+    <m.div
+      ref={ref}
+      className="w-10 cursor-pointer"
+      onClick={onClick}
+      style={{ width }}
+    >
+      <img alt={alt} src={src} />
+    </m.div>
+  );
+};
+
 const Taskbar: FC = () => {
   const { open } = useProcesses();
   const mouseX = useMotionValue(Infinity);
   const [isMobile, setIsMobile] = useState(false);
+  const [isLaunchpadOpen, setLaunchpadOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -47,6 +91,8 @@ const Taskbar: FC = () => {
     [open]
   );
 
+  const toggleLaunchpad = () => setLaunchpadOpen((prev) => !prev);
+
   return (
     <StyledTaskbar {...useTaskbarContextMenu()} {...FOCUSABLE_ELEMENT}>
       <m.div
@@ -55,53 +101,31 @@ const Taskbar: FC = () => {
         onMouseMove={(e) => mouseX.set(e.pageX)}
         style={{ border: "1px solid darkgray" }}
       >
+        {/* Launchpad Icon with Dock Effect */}
+        <Icon
+          alt="Launchpad icon"
+          isMobile={isMobile}
+          mouseX={mouseX}
+          onClick={toggleLaunchpad}
+          src="/System/icons/144x144/Launchpad.avif"
+        />
+
+        {/* Other App Icons */}
         {SUGGESTED.map((app, i) => (
-          <AppIcon
+          <Icon
             key={i}
-            app={app}
+            alt={`${app} icon`}
             isMobile={isMobile}
             mouseX={mouseX}
-            openApp={() => openApp(app)}
+            onClick={() => openApp(app)}
+            src={`/System/icons/144x144/${app}.avif`}
           />
         ))}
       </m.div>
+
+      {/* Launchpad Modal */}
+      {isLaunchpadOpen && <LaunchpadModal closeModal={toggleLaunchpad} />}
     </StyledTaskbar>
-  );
-};
-
-const AppIcon = ({
-  mouseX,
-  openApp,
-  app,
-  isMobile,
-}: {
-  app: string;
-  isMobile: boolean;
-  mouseX: MotionValue;
-  openApp: () => void;
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const distance = useTransform(mouseX, (val) => {
-    const bounds = ref.current?.getBoundingClientRect() ?? { width: 0, x: 0 };
-    return val - bounds.x - bounds.width / 2;
-  });
-
-  const widthSync = useTransform(
-    distance,
-    [-150, 0, 150],
-    isMobile ? [40, 80, 40] : [50, 100, 50] // Adjust width for mobile
-  );
-  const width = useSpring(widthSync, {
-    damping: 12,
-    mass: 0.1,
-    stiffness: 150,
-  });
-
-  return (
-    <m.div ref={ref} className="w-10" onClick={openApp} style={{ width }}>
-      <img alt={`${app} icon`} src={`/System/icons/144x144/${app}.avif`} />
-    </m.div>
   );
 };
 
