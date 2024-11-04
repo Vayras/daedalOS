@@ -15,6 +15,7 @@ const LAUNCHPAD_APPS = [
   "Calculator",
   "NotesApp",
   "AppleMusic",
+  "FaceTime",
   // Add more apps as needed
 ];
 
