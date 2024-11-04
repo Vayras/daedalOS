@@ -287,7 +287,7 @@ export const SHORTCUT_ICON = `${ICON_PATH}/shortcut.webp`;
 
 export const FAVICON_BASE_PATH = "/favicon.ico";
 
-export const FOLDER_ICON = `${ICON_PATH}/folder.webp`;
+export const FOLDER_ICON = `${ICON_PATH}/folderMacOs.webp`;
 
 export const FOLDER_BACK_ICON = `${ICON_PATH}/folder_back.webp`;
 
@@ -297,7 +297,7 @@ export const COMPRESSED_FOLDER_ICON = `${ICON_PATH}/compressed.webp`;
 
 export const MOUNTED_FOLDER_ICON = `${ICON_PATH}/mounted.webp`;
 
-export const NEW_FOLDER_ICON = `${ICON_PATH}/new_folder.webp`;
+export const NEW_FOLDER_ICON = `${ICON_PATH}/folderMacOs.webp`;
 
 export const UNKNOWN_ICON_PATH = `${ICON_PATH}/unknown.webp`;
 
