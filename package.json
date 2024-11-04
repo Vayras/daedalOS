@@ -81,11 +81,13 @@
     "react-rangeslider": "^2.2.0",
     "react-rnd": "10.4.12",
     "react-use": "^17.5.1",
+    "react-webcam": "^7.2.0",
     "resedit": "^2.0.3",
     "rtf.js": "^3.0.9",
     "styled-components": "^6.1.13",
     "utif": "https://github.com/photopea/UTIF.js",
-    "wasi-js": "^1.7.3"
+    "wasi-js": "^1.7.3",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "7z-wasm": "^1.1.0",

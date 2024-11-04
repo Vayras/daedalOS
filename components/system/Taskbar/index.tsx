@@ -22,6 +22,7 @@ const SUGGESTED = [
   "Calculator",
   "NotesApp",
   "AppleMusic",
+  "FaceTime"
 ];
 
 const SUGGESTEDMOBILE = ["FileExplorer", "Terminal", "NotesApp", "AppleMusic"];

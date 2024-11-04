@@ -6,7 +6,7 @@ const directory: Processes = {
   AppleMusic: {
     Component: dynamic(() => import("components/apps/AppleMusic")),
     icon: "/System/Icons/calculator.webp", // Replace with the actual path to your calculator icon
-    title: "Calculator",
+    title: "AppleMusic",
   },
   BoxedWine: {
     Component: dynamic(() => import("components/apps/BoxedWine")),
@@ -39,7 +39,7 @@ const directory: Processes = {
   },
   Calculator: {
     Component: dynamic(() => import("components/apps/Calculator")),
-    icon: "/System/calc.jpg",  // Replace with the actual path to your calculator icon
+    icon: "/System/calc.jpg", // Replace with the actual path to your calculator icon
     title: "Calculator",
   },
   ClassiCube: {
@@ -91,6 +91,11 @@ const directory: Processes = {
     lockAspectRatio: true,
     singleton: true,
     title: "Emulator",
+  },
+  FaceTime: {
+    Component: dynamic(() => import("components/apps/FaceTime")),
+    icon: "/System/Icons/facetime.avif",
+    title: "FaceTime",
   },
   FileExplorer: {
     Component: dynamic(() => import("components/apps/FileExplorer")),
