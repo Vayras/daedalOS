@@ -22,13 +22,8 @@ export const RESIZING_ENABLED = {
   topRight: true,
 };
 
-let isMobile = false;
-if (typeof window !== "undefined") {
-  isMobile = window.innerWidth <= 480;
-}
-
-export const MIN_WINDOW_HEIGHT = isMobile ? 520 : 500;
-export const MIN_WINDOW_WIDTH = isMobile ? window.innerWidth : 320;
+export const MIN_WINDOW_HEIGHT = 30;
+export const MIN_WINDOW_WIDTH = 166;
 
 const rndDefaults = {
   cancel: ".cancel",
