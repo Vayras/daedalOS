@@ -136,6 +136,17 @@ const StyledSearch = styled(motion.nav)<StyledSearchProps>`
     height: 100%;
     width: 100%;
   }
+
+  /* Mobile breakpoints */
+  @media (max-width: 620px) {
+    bottom: 20px;
+    width: 420px;
+  }
+
+  @media (max-width: 420px) {
+    bottom: 20px;
+    width: 320px;
+  }
 `;
 
 export default StyledSearch;
