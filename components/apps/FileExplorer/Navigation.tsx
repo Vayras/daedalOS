@@ -82,12 +82,17 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
         <button
           disabled={!canGoBack}
           onClick={() => moveHistory(-1)}
+          onTouchEnd={() => moveHistory(-1)} // Add touch event for mobile
           type="button"
           {...label(
             canGoBack
               ? `Back to ${basename(history[position - 1]) || ROOT_NAME}`
               : "Back"
           )}
+          style={{
+            padding: "10px",
+            touchAction: "manipulation", // Optimize for touch devices
+          }}
         >
           <Icon
             height="2.2rem"
@@ -100,6 +105,7 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
         <button
           disabled={!canGoForward}
           onClick={() => moveHistory(+1)}
+          onTouchEnd={() => moveHistory(-1)}
           type="button"
           {...label(
             canGoForward
@@ -107,6 +113,10 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
               : "Forward"
           )}
           className="rotate-180 pt-1"
+          style={{
+            padding: "10px",
+            touchAction: "manipulation", // Optimize for touch devices
+          }}
         >
           <Icon
             height="2.2rem"

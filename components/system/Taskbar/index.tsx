@@ -19,10 +19,10 @@ const SUGGESTED = [
   "Messenger",
   "Browser",
   "Paint",
-  "Calculator",
+  "AppleCalc",
   "NotesApp",
   "AppleMusic",
-  "FaceTime"
+  "FaceTime",
 ];
 
 const SUGGESTEDMOBILE = ["FileExplorer", "Terminal", "NotesApp", "AppleMusic"];

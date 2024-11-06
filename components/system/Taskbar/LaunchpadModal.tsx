@@ -12,7 +12,7 @@ const LAUNCHPAD_APPS = [
   "Messenger",
   "Browser",
   "Paint",
-  "Calculator",
+  "AppleCalc",
   "NotesApp",
   "AppleMusic",
   "FaceTime",

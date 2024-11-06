@@ -22,7 +22,7 @@ export const RESIZING_ENABLED = {
   topRight: true,
 };
 
-export const MIN_WINDOW_HEIGHT = 30;
+export const MIN_WINDOW_HEIGHT = 60;
 export const MIN_WINDOW_WIDTH = 166;
 
 const rndDefaults = {
