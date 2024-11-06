@@ -27,6 +27,7 @@ const StyledFileManager = styled.ol<StyledFileManagerProps>`
     height: calc(100% - ${TASKBAR_HEIGHT}px);
     overflow: visible;
     padding-bottom: 21px;
+    padding-top: 50px;
   }
 `;
 
