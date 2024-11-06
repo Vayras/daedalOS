@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const StyledAddressBar = styled.div`
+  color: black;
   background-position: 2px 5px;
   background-repeat: no-repeat;
   background-size: 16px;
@@ -14,7 +15,7 @@ const StyledAddressBar = styled.div`
 
   input {
     background-color: transparent;
-    color: #fff;
+    color: black;
     font-family: ${({ theme }) => theme.formats.systemFont};
     font-size: 16px;
     font-weight: 600;

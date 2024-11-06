@@ -147,7 +147,11 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
         <Navigation ref={inputRef} hideSearch={false} id={id} />
       ) : (
         <div className="flex justify-center items-center w-full mr-[160px] font-semibold">
-          <span className="text-white ml-4">{directory.title || id}</span>
+          <span className="text-black ml-4 truncate max-w-[200px] sm:max-w-full sm:text-ellipsis sm:overflow-hidden sm:whitespace-nowrap">
+            {directory.title && directory.title.length > 20
+              ? `${directory.title.slice(0, 20)}...`
+              : directory.title || id}
+          </span>
         </div>
       )}
     </StyledTitlebar>

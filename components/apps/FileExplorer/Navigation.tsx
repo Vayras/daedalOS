@@ -91,13 +91,13 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
           )}
           style={{
             padding: "10px",
-            touchAction: "manipulation", // Optimize for touch devices
+            touchAction: "manipulation",
           }}
         >
           <Icon
             height="2.2rem"
             icon="weui:back-filled"
-            style={{ color: "white" }}
+            style={{ color: "black" }}
             width="2.2rem"
           />
         </button>
@@ -112,7 +112,7 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
               ? `Forward to ${basename(history[position + 1]) || ROOT_NAME}`
               : "Forward"
           )}
-          className="rotate-180 pt-1"
+          className="rotate-180"
           style={{
             padding: "10px",
             touchAction: "manipulation", // Optimize for touch devices
@@ -121,7 +121,7 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
           <Icon
             height="2.2rem"
             icon="weui:back-filled"
-            style={{ color: "white" }}
+            style={{ color: "black" }}
             width="2.2rem"
           />
         </button>
