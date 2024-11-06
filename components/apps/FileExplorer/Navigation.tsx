@@ -90,10 +90,10 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
           )}
         >
           <Icon
-            height="1.2rem"
+            height="2.2rem"
             icon="weui:back-filled"
             style={{ color: "white" }}
-            width="1.2rem"
+            width="2.2rem"
           />
         </button>
 
@@ -109,10 +109,10 @@ const Navigation = forwardRef<HTMLInputElement, NavigationProps>(
           className="rotate-180 pt-1"
         >
           <Icon
-            height="1.2rem"
+            height="2.2rem"
             icon="weui:back-filled"
             style={{ color: "white" }}
-            width="1.2rem"
+            width="2.2rem"
           />
         </button>
 
