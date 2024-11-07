@@ -1,20 +1,27 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable no-use-before-define */
+/* eslint-disable @typescript-eslint/consistent-type-imports */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable unicorn/no-null */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState, useRef, useEffect } from "react";
 import Webcam from "react-webcam";
 import { format } from "date-fns";
 
 // Define interfaces
 interface SidebarProps {
-  state: FaceTimeState;
-  onTake: () => void;
-  onSave: () => void;
-  onSelect: (src: string) => void;
   images: Record<string, string>;
   onDelete: (date: string) => void;
+  onSave: () => void;
+  onSelect: (src: string) => void;
+  onTake: () => void;
+  state: FaceTimeState;
 }
 
 interface SidebarItemProps {
-  date: string;
   active: boolean;
+  date: string;
   onDelete: (date: string) => void;
 }
 
@@ -99,54 +106,52 @@ const Sidebar: React.FC<SidebarProps> = ({
   onSelect,
   images,
   onDelete,
-}) => {
-  return (
-    <div className="absolute w-72 h-full z-10 left-0 top-0 flex flex-col bg-zinc-900/85 backdrop-blur-xl">
-      <div className="p-5 space-y-2.5 text-sm">
-        <button
-          className="flex-center space-x-1 w-full py-1 text-white bg-green-700 rounded-md"
-          onClick={onTake}
-        >
-          <span className="i-ion:ios-videocam text-base" />
-          <span>{state.curImage ? "Retake" : "Take a Picture"}</span>
-        </button>
-        <button
-          className={`flex-center space-x-1 w-full py-1 text-white rounded-md bg-stone-500 ${
-            !state.canSave ? "opacity-60 cursor-not-allowed" : ""
-          }`}
-          disabled={!state.canSave}
-          onClick={onSave}
-        >
-          <span
-            className={`${
-              state.canSave ? "i-mdi:content-save" : "i-mdi:content-save-off"
-            } text-base`}
-          />
-          <span>Save Picture</span>
-        </button>
-      </div>
-
-      <div className="text-xs flex-1 overflow-y-scroll p-5">
-        <div className="px-2.5 text-white/60 mb-2">Recent</div>
-        {Object.keys(images)
-          .sort((a, b) => Number(b) - Number(a)) // Sort descending
-          .map((date) => (
-            <button
-              className="relative w-full"
-              key={date}
-              onClick={() => onSelect(images[date])}
-            >
-              <SidebarItem
-                date={date}
-                active={state.curImage === images[date]}
-                onDelete={onDelete}
-              />
-            </button>
-          ))}
-      </div>
+}) => (
+  <div className="absolute w-72 h-full z-10 left-0 top-0 flex flex-col bg-zinc-900/85 backdrop-blur-xl">
+    <div className="p-5 space-y-2.5 text-sm">
+      <button
+        className="flex-center space-x-1 w-full py-1 text-white bg-green-700 rounded-md"
+        onClick={onTake}
+      >
+        <span className="i-ion:ios-videocam text-base" />
+        <span>{state.curImage ? "Retake" : "Take a Picture"}</span>
+      </button>
+      <button
+        className={`flex-center space-x-1 w-full py-1 text-white rounded-md bg-stone-500 ${
+          state.canSave ? "" : "opacity-60 cursor-not-allowed"
+        }`}
+        disabled={!state.canSave}
+        onClick={onSave}
+      >
+        <span
+          className={`${
+            state.canSave ? "i-mdi:content-save" : "i-mdi:content-save-off"
+          } text-base`}
+        />
+        <span>Save Picture</span>
+      </button>
     </div>
-  );
-};
+
+    <div className="text-xs flex-1 overflow-y-scroll p-5">
+      <div className="px-2.5 text-white/60 mb-2">Recent</div>
+      {Object.keys(images)
+        .sort((a, b) => Number(b) - Number(a)) // Sort descending
+        .map((date) => (
+          <button
+            key={date}
+            className="relative w-full"
+            onClick={() => onSelect(images[date])}
+          >
+            <SidebarItem
+              active={state.curImage === images[date]}
+              date={date}
+              onDelete={onDelete}
+            />
+          </button>
+        ))}
+    </div>
+  </div>
+);
 
 // FaceTime Component
 const FaceTime: React.FC = () => {
@@ -167,15 +172,15 @@ const FaceTime: React.FC = () => {
   }, []);
 
   const handleTake = () => {
-    if (!state.curImage) {
+    if (state.curImage) {
+      setState({ ...state, canSave: false, curImage: null });
+    } else {
       const src = webcamRef.current?.getScreenshot();
       if (src) {
-        setState({ ...state, curImage: src, canSave: true });
+        setState({ ...state, canSave: true, curImage: src });
       } else {
         console.error("Failed to capture image from webcam.");
       }
-    } else {
-      setState({ ...state, curImage: null, canSave: false });
     }
   };
 
@@ -184,14 +189,13 @@ const FaceTime: React.FC = () => {
     if (state.curImage) {
       addImageToLocalStorage(state.curImage);
       setImages(getImagesFromLocalStorage());
-      setState({ ...state, curImage: null, canSave: false });
-      console.log("Image saved.");
+      setState({ ...state, canSave: false, curImage: null });
     }
   };
 
   // Handler to select an image from the sidebar
   const handleSelect = (src: string) => {
-    setState({ ...state, curImage: src, canSave: false });
+    setState({ ...state, canSave: false, curImage: src });
   };
 
   // Handler to delete an image
@@ -199,9 +203,8 @@ const FaceTime: React.FC = () => {
     deleteImageFromLocalStorage(date);
     setImages(getImagesFromLocalStorage());
     if (state.curImage === images[date]) {
-      setState({ ...state, curImage: null, canSave: false });
+      setState({ ...state, canSave: false, curImage: null });
     }
-    console.log(`Image with date ${date} deleted.`);
   };
 
   // Handlers for webcam events
@@ -223,12 +226,12 @@ const FaceTime: React.FC = () => {
   return (
     <div className="relative h-full">
       <Sidebar
-        state={state}
-        onTake={handleTake}
-        onSave={handleSave}
-        onSelect={handleSelect}
         images={images}
         onDelete={handleDelete}
+        onSave={handleSave}
+        onSelect={handleSelect}
+        onTake={handleTake}
+        state={state}
       />
 
       <div className="h-full bg-zinc-800 flex items-center justify-center">
@@ -237,28 +240,28 @@ const FaceTime: React.FC = () => {
         )}
         {state.webcamError ? (
           <div className="text-red-500">{state.webcamError}</div>
-        ) : !state.curImage ? (
+        ) : state.curImage ? (
+          state.curImage && (
+            <img
+              alt="Captured"
+              className="w-full h-full object-cover"
+              src={state.curImage}
+            />
+          )
+        ) : (
           <Webcam
-            mirrored={true}
-            audio={false}
             ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            videoConstraints={{
-              facingMode: "user",
-              aspectRatio: 1.7,
-            }}
+            audio={false}
             className="w-full h-full object-cover"
             onUserMedia={handleUserMedia}
             onUserMediaError={handleUserMediaError}
+            screenshotFormat="image/jpeg"
+            videoConstraints={{
+              aspectRatio: 1.7,
+              facingMode: "user",
+            }}
+            mirrored
           />
-        ) : (
-          state.curImage && (
-            <img
-              className="w-full h-full object-cover"
-              src={state.curImage}
-              alt="Captured"
-            />
-          )
         )}
       </div>
     </div>
