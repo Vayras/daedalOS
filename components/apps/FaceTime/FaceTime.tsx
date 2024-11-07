@@ -213,15 +213,16 @@ const FaceTime: React.FC = () => {
     setIsLoading(false);
   };
 
-  const handleUserMediaError = (error: Error) => {
-    console.error("Webcam error:", error);
-    setState((prevState) => ({
-      ...prevState,
-      webcamError:
-        "Unable to access the webcam. Please check your permissions.",
-    }));
-    setIsLoading(false);
-  };
+const handleUserMediaError = (error: string | DOMException) => {
+  console.error("Webcam error:", error);
+  setState((prevState) => ({
+    ...prevState,
+    webcamError:
+      "Unable to access the webcam. Please check your permissions.",
+  }));
+  setIsLoading(false);
+};
+
 
   return (
     <div className="relative h-full">
