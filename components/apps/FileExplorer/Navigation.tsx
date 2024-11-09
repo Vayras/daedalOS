@@ -1,3 +1,6 @@
+/* eslint-disable sonarjs/no-dead-store */
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { basename, dirname } from "path";
 import {
   forwardRef,

@@ -38,10 +38,10 @@ const AddressBar = forwardRef<HTMLInputElement, AddressBarProps>(
     const actionButtonRef = useRef<HTMLButtonElement | null>(null);
     const { open, url: changeUrl, processes } = useProcesses();
     const process = processes[id] || {}; // Ensure process exists
-    const { icon = "/path/to/default/icon.png", url = "" } = process; // Fallback for icon
+    const { url = "" } = process; // Fallback for icon
     const displayName = useMemo(() => basename(url) || ROOT_NAME, [url]);
     const [addressBar, setAddressBar] = useState(displayName);
-    const { exists, stat, updateFolder } = useFileSystem();
+    const { exists, stat } = useFileSystem();
     const { updateRecentFiles } = useSession();
     const inputing = useMemo(
       () =>

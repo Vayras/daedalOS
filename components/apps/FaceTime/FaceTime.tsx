@@ -112,6 +112,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       <button
         className="flex-center space-x-1 w-full py-1 text-white bg-green-700 rounded-md"
         onClick={onTake}
+        type="button"
       >
         <span className="i-ion:ios-videocam text-base" />
         <span>{state.curImage ? "Retake" : "Take a Picture"}</span>
@@ -122,6 +123,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         }`}
         disabled={!state.canSave}
         onClick={onSave}
+        type="button"
       >
         <span
           className={`${
@@ -141,6 +143,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             key={date}
             className="relative w-full"
             onClick={() => onSelect(images[date])}
+            type="button"
           >
             <SidebarItem
               active={state.curImage === images[date]}
@@ -213,16 +216,15 @@ const FaceTime: React.FC = () => {
     setIsLoading(false);
   };
 
-const handleUserMediaError = (error: string | DOMException) => {
-  console.error("Webcam error:", error);
-  setState((prevState) => ({
-    ...prevState,
-    webcamError:
-      "Unable to access the webcam. Please check your permissions.",
-  }));
-  setIsLoading(false);
-};
-
+  const handleUserMediaError = (error: string | DOMException) => {
+    console.error("Webcam error:", error);
+    setState((prevState) => ({
+      ...prevState,
+      webcamError:
+        "Unable to access the webcam. Please check your permissions.",
+    }));
+    setIsLoading(false);
+  };
 
   return (
     <div className="relative h-full">

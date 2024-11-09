@@ -46,6 +46,9 @@ type BaseProcessArguments = {
   autoSizing?: boolean;
   backgroundColor?: string;
   dependantLibs?: string[];
+  directory?: {
+    title?: string;
+  };
   hideMaximizeButton?: boolean;
   hideMinimizeButton?: boolean;
   hideTaskbarEntry?: boolean;

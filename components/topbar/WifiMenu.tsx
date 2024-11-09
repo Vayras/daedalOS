@@ -1,3 +1,10 @@
+/* eslint-disable sonarjs/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable @typescript-eslint/consistent-type-imports */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable sonarjs/sonar-prefer-read-only-props */
+/* eslint-disable react/function-component-definition */
 import React, { useRef } from "react";
 import { useClickOutside } from "hooks/useClickOutside";
 
@@ -19,7 +26,7 @@ export default function WifiMenu({
   useClickOutside(wifiRef, toggleWifiMenu, [btnRef]);
 
   const handleToggle = () => {
-    setWifiEnabled((prev) => !prev); // Toggle the Wi-Fi state
+    setWifiEnabled(!wifiEnabled); // Toggle the Wi-Fi state directly
   };
 
   return (

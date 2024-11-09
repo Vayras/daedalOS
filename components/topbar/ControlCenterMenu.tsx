@@ -206,7 +206,7 @@ const ControlCenter = ({
       />
 
       {/* Music Player */}
-      <MusicPlayer volume={volume / 100} />
+      <MusicPlayer />
     </div>
   );
 };
