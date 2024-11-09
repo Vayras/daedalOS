@@ -1,11 +1,11 @@
 import { memo, useState } from "react";
-import { Boot } from "pages/boot";
+import { Boot } from "components/boot";
 import Taskbar from "components/system/Taskbar";
 import useGlobalErrorHandler from "hooks/useGlobalErrorHandler";
 import useGlobalKeyboardShortcuts from "hooks/useGlobalKeyboardShortcuts";
 import useIFrameFocuser from "hooks/useIFrameFocuser";
 import useUrlLoader from "hooks/useUrlLoader";
-import { Login } from "pages/login";
+import { Login } from "components/login";
 import AppsLoader from "components/system/Apps/AppsLoader";
 import Desktop from "components/system/Desktop";
 
