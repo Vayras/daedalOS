@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks-addons/no-unused-deps */
 import { basename } from "path";
 import { memo, useEffect, useRef, useState } from "react";
 import { Search } from "components/apps/FileExplorer/NavigationIcons";

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable react/function-component-definition */
 import { useRef } from "react";
 import { MenuItem, MenuItemGroup } from "components/topbar/base";

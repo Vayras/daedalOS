@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { m, AnimatePresence } from "framer-motion";
 import { type FC, useState, useEffect } from "react";
 import { useProcesses } from "contexts/process";

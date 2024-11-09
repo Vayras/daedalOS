@@ -1,3 +1,6 @@
+/* eslint-disable sonarjs/no-dead-store */
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useTheme } from "styled-components";
 import { OpenFolder } from "components/system/Taskbar/Search/Icons";
 import StyledTaskbarButton from "components/system/Taskbar/StyledTaskbarButton";

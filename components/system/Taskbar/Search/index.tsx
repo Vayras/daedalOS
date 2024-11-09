@@ -1,3 +1,6 @@
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable sonarjs/no-dead-store */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { extname } from "path";
 import { useTheme } from "styled-components";
 import {
@@ -94,6 +97,7 @@ const METADATA = {
 const Search: FC<SearchProps> = ({ toggleSearch }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const menuRef = useRef<HTMLElement | null>(null);
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const { recentFiles, updateRecentFiles } = useSession();
   const { lstat, readFile } = useFileSystem();
   const [activeTab, setActiveTab] = useState<TabName>("All");

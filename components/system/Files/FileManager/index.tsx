@@ -26,9 +26,6 @@ import { getExtension, haltEvent } from "utils/functions";
 import Columns from "components/system/Files/FileManager/Columns";
 import { useSession } from "contexts/session";
 
-const StatusBar = dynamic(
-  () => import("components/system/Files/FileManager/StatusBar")
-);
 
 const StyledEmpty = dynamic(
   () => import("components/system/Files/FileManager/StyledEmpty")
@@ -68,12 +65,11 @@ const FileManager: FC<FileManagerProps> = ({
   isStartMenu,
   loadIconsImmediately,
   readOnly,
-  showStatusBar,
   skipFsWatcher,
   skipSorting,
   url,
 }) => {
-  const { views, setViews } = useSession();
+  const { views } = useSession();
   const view = useMemo(() => {
     if (isDesktop) return "icon";
     if (isStartMenu) return "list";

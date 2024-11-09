@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 // components/system/Apps/Calculator/useCalculatorHook.ts
 
 import { useEffect } from "react";

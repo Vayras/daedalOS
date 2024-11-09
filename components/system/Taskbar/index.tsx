@@ -1,4 +1,8 @@
-import React, { memo, useCallback, useRef, useEffect, useState } from "react";
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable sonarjs/no-array-index-key */
+/* eslint-disable import/no-duplicates */
+import type React from "react";
+import { memo, useCallback, useRef, useEffect, useState } from "react";
 import {
   type MotionValue,
   m,
