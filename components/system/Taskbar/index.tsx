@@ -21,7 +21,7 @@ const SUGGESTED = [
   "FileExplorer",
   "Terminal",
   "Messenger",
-  "Browser",
+  "Safari",
   "Paint",
   "AppleCalc",
   "NotesApp",

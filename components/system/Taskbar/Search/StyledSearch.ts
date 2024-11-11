@@ -8,11 +8,9 @@ type StyledSearchProps = {
 const StyledSearch = styled(motion.nav)<StyledSearchProps>`
   position: fixed;
   left: 50%;
-  bottom: 60px;
+  bottom: 30px;
   transform: translateX(-50%);
   width: 620px;
-  backdrop-filter: ${({ theme }) => `blur(${theme.sizes.taskbar.panelBlur})`};
-
   @keyframes fade-in {
     0% {
       opacity: 0%;
@@ -24,7 +22,7 @@ const StyledSearch = styled(motion.nav)<StyledSearchProps>`
 
   .search {
     width: 100%;
-
+    top: 0px;
     input {
       appearance: none;
       background-color: #dadadb;
@@ -32,10 +30,8 @@ const StyledSearch = styled(motion.nav)<StyledSearchProps>`
       color: #000;
       font-size: 15px;
       height: 60px;
-      padding: 10px;
       padding-left: 37px;
       width: 100%;
-      margin-top: 10px;
 
       &::placeholder {
         color: #a3a3a5;
@@ -47,17 +43,9 @@ const StyledSearch = styled(motion.nav)<StyledSearchProps>`
       }
 
       &::-webkit-search-cancel-button {
+        display: none;
         margin: 0 0 0 8px;
       }
-    }
-
-    svg {
-      bottom: 20px;
-      width: 20px;
-      left: 12px;
-      position: absolute;
-      width: 20px;
-      z-index: 2;
     }
   }
 
@@ -111,21 +99,6 @@ const StyledSearch = styled(motion.nav)<StyledSearchProps>`
         fill: rgb(115, 115, 115);
         height: 128px;
         width: 128px;
-      }
-    }
-
-    > nav {
-      position: absolute;
-      right: 25px;
-      top: 15px;
-
-      .close-button svg {
-        fill: rgb(200, 200, 200);
-        height: 14px;
-
-        &:hover {
-          fill: #fff;
-        }
       }
     }
   }

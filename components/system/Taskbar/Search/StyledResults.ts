@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
 const StyledResults = styled.div`
+  border-top: 1px solid gray;
   color: black;
-  border-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
   margin-bottom: 10px;
   display: flex;
   height: ${({ theme }) =>
@@ -13,6 +15,8 @@ const StyledResults = styled.div`
 
   .list {
     scrollbar-width: none;
+    border-bottom-left-radius: 10px;
+    border-right: 1px solid gray;
     background-color: #dadadb;
     overflow-y: auto;
     scrollbar-gutter: auto;

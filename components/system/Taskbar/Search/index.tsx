@@ -12,7 +12,6 @@ import {
   type FC,
 } from "react";
 import { m as motion } from "framer-motion";
-import { Search as SearchIcon } from "components/apps/FileExplorer/NavigationIcons";
 import {
   getCachedShortcut,
   getProcessByFileExtension,
@@ -97,7 +96,7 @@ const METADATA = {
 const Search: FC<SearchProps> = ({ toggleSearch }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const menuRef = useRef<HTMLElement | null>(null);
-  // eslint-disable-next-line unused-imports/no-unused-vars
+
   const { recentFiles, updateRecentFiles } = useSession();
   const { lstat, readFile } = useFileSystem();
   const [activeTab, setActiveTab] = useState<TabName>("All");
@@ -262,9 +261,9 @@ const Search: FC<SearchProps> = ({ toggleSearch }) => {
       <div>
         {/* Search Bar at the Top */}
         <motion.div className="search" {...inputTransition}>
-          <SearchIcon />
           <input
             ref={focusOnRenderCallback}
+            className=""
             onChange={() => {
               const tabAppend = activeTab === "All" ? "" : `${activeTab}: `;
               const value = inputRef.current?.value.startsWith(tabAppend)

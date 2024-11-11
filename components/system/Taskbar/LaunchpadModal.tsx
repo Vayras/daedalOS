@@ -11,7 +11,7 @@ const LAUNCHPAD_APPS = [
   "FileExplorer",
   "Terminal",
   "Messenger",
-  "Browser",
+  "Safari",
   "Paint",
   "AppleCalc",
   "NotesApp",

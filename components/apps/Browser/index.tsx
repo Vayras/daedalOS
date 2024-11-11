@@ -114,7 +114,7 @@ const Browser: FC<ComponentProcessProps> = ({ id }) => {
 
         setLoading(true);
         if (isHtml) setSrcDoc((await readFile(addressInput)).toString());
-        setIcon(id, processDirectory.Browser.icon);
+        setIcon(id, processDirectory.Safari.icon);
 
         if (addressInput.toLowerCase().startsWith(DINO_GAME.url)) {
           changeIframeWindowLocation(

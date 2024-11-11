@@ -32,16 +32,6 @@ const directory: Processes = {
     singleton: true,
     title: "BoxedWine",
   },
-  Browser: {
-    Component: dynamic(() => import("components/apps/Browser")),
-    backgroundColor: "#FFF",
-    defaultSize: {
-      height: 500,
-      width: 600,
-    },
-    icon: "/System/Icons/chromium.webp",
-    title: "Browser",
-  },
   ClassiCube: {
     Component: dynamic(() => import("components/apps/ClassiCube")),
     backgroundColor: "#201E20",
@@ -282,6 +272,16 @@ const directory: Processes = {
     },
     singleton: true,
     title: "Run",
+  },
+  Safari: {
+    Component: dynamic(() => import("components/apps/Browser")),
+    backgroundColor: "#FFF",
+    defaultSize: {
+      height: 500,
+      width: 600,
+    },
+    icon: "/System/Icons/chromium.webp",
+    title: "Safari",
   },
   SpaceCadet: {
     Component: dynamic(() => import("components/apps/SpaceCadet")),

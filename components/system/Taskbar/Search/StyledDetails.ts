@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
 const StyledDetails = styled.div`
+  border-bottom-right-radius: 10px;
   background-color: #dadadb;
   border-bottom: none;
   box-sizing: content-box;
   display: flex;
-    height: ${({ theme }) =>
-      `calc(100% - ${theme.sizes.search.headerHeight}px + ${theme.sizes.search.inputHeight}px)`};
   flex-direction: column;
   overflow-x: hidden;
   padding-top: 20px;
@@ -76,7 +75,7 @@ const StyledDetails = styled.div`
     }
 
     td {
-      color: black
+      color: black;
       padding-right: 5px;
       word-break: break-all;
     }
@@ -86,7 +85,7 @@ const StyledDetails = styled.div`
         text-decoration: underline;
 
         &:hover {
-          color: black
+          color: black;
         }
       }
     }
@@ -101,20 +100,19 @@ const StyledDetails = styled.div`
 
     li {
       button {
-        color:black;
+        color: black;
         display: flex;
         font-size: 12px;
         padding: 8px 18px;
         place-items: start;
 
         svg {
-          color:black;
+          color: black;
           height: 16px;
           margin-right: 12px;
           width: 16px;
         }
       }
-
     }
   }
 
