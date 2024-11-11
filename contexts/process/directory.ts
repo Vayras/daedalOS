@@ -5,7 +5,7 @@ import { FOLDER_ICON, TASKBAR_HEIGHT } from "utils/constants";
 const directory: Processes = {
   AppleCalc: {
     Component: dynamic(() => import("components/apps/AppleCalc")),
-    icon: "/System/calc.jpg", // Replace with the actual path to your calculator icon
+    icon: "/System/AppleCalc.jpg", // Replace with the actual path to your calculator icon
     title: "Calculator",
   },
   AppleMusic: {
