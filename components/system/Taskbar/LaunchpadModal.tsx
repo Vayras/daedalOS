@@ -45,14 +45,14 @@ const LaunchpadModal: FC<LaunchpadModalProps> = ({ closeModal }) => {
     <AnimatePresence>
       <m.div
         animate={{ opacity: 1 }}
-        className=" absolute bottom-24 mb-[200px] lg:mb-0"
+        className=" absolute bottom-[-50px] mb-[200px] lg:mb-0"
         exit={{ opacity: 0 }}
         initial={{ opacity: 0 }}
         onClick={closeModal}
       >
         <m.div
           animate={{ opacity: 1, scale: 1 }}
-          className="bg-white/70 dark:bg-slate-700/90  backdrop-blur-2xl rounded-2xl p-6 shadow-lg lg:h-[680px] h-[500px] lg:min-w-[800px] min-w-[380px] border-2 border-gray-600 text-white"
+          className="bg-white/70 dark:bg-slate-700/90  backdrop-blur-2xl rounded-2xl p-6 shadow-lg lg:h-[680px] h-[500px] lg:min-w-[800px] min-w-[320px] border-2 border-gray-600 text-white"
           exit={{ opacity: 0, scale: 0.8 }}
           initial={{ opacity: 0, scale: 0.8 }}
           onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
